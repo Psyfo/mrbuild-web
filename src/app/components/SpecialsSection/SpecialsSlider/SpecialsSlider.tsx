@@ -40,7 +40,7 @@ const SpecialsSlider: React.FC = () => {
     >
       {specials.map((specials, index) => (
         <SwiperSlide key={index}>
-          <div className=''>
+          <div className='flex items-center'>
             <Image
               src={specials.imageUrl}
               alt='Special'
