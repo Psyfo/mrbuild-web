@@ -1,6 +1,6 @@
-"use client";
-import Image from "next/image";
-import { useState } from "react";
+'use client';
+import Image from 'next/image';
+import { useState } from 'react';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,7 +77,7 @@ export default function Header() {
               Brands
             </a>
             <a
-              href='#locator'
+              href='#branch-locator'
               onClick={handleOptionClick}
               className='hover:text-mbYellow'
             >
