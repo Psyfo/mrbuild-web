@@ -2,26 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: 'Dinot';
+    src: url('/fonts/dinot.woff2') format('woff2'),
+        url('/fonts/dinot.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Dinot';
+    src: url('/fonts/dinot.woff2') format('woff2'),
+        url('/fonts/dinot.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Aleo:wght@400;700&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    color: var(--foreground);
+    background: var(--background);
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* PARALLAX */
+.parallax {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+
+/* SCROLLBARS */
+.scrollbar-custom::-webkit-scrollbar {
+    width: 2px;
+    /* Width of the scrollbar */
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+    background: transparent;
+    /* Track color */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    /* White with 30% opacity */
+    border-radius: 10px;
+    /* Optional: round edges */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+    /* Slightly more opaque on hover */
+}
+
+/* Firefox */
+.scrollbar-custom {
+    scrollbar-width: thin;
+    /* Options: auto, thin, none */
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    /* Thumb color and track color */
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+    .text-balance {
+        text-wrap: balance;
+    }
 }

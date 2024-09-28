@@ -1,3 +1,11 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": ["next/core-web-vitals", "next/typescript"],
+  "overrides": [
+    {
+      "files": ["./src/app/components/ServicesSection/ServicesSlider/ServicesSlider.tsx"], // Adjust this path to your specific file
+      "rules": {
+        "import/order": "off" // Disable import sorting for this file
+      }
+    }
+  ]
 }
