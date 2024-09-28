@@ -18,6 +18,16 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: "DINOT-Bold";
+    src: url("https://db.onlinewebfonts.com/t/feab4f015f183ad38338781e0369490d.eot");
+    src: url("https://db.onlinewebfonts.com/t/feab4f015f183ad38338781e0369490d.eot?#iefix")format("embedded-opentype"),
+        url("https://db.onlinewebfonts.com/t/feab4f015f183ad38338781e0369490d.woff2")format("woff2"),
+        url("https://db.onlinewebfonts.com/t/feab4f015f183ad38338781e0369490d.woff")format("woff"),
+        url("https://db.onlinewebfonts.com/t/feab4f015f183ad38338781e0369490d.ttf")format("truetype"),
+        url("https://db.onlinewebfonts.com/t/feab4f015f183ad38338781e0369490d.svg#DINOT-Bold")format("svg");
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Aleo:wght@400;700&display=swap');
 
 :root {
@@ -42,8 +52,8 @@ html {
 
 body {
     color: var(--foreground);
-    background: var(--background);
-    font-family: Arial, Helvetica, sans-serif;
+    background: #1A1A1A;
+    font-family: Dinot, sans-serif;
     margin: 0;
     padding: 0;
 }
