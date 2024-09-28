@@ -16,8 +16,8 @@ const config: Config = {
         mbDark: '#1A1A1A',
       },
       fontFamily: {
-        aleo: ['Aleo', 'serif'],
-        dinot: ['Dinot', 'sans-serif'], // Add Dinot as a custom font
+        aleo: ['Aleo'],
+        dinot: ['Dinot'], // Add Dinot as a custom font
       },
       keyframes: {
         marquee: {
