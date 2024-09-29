@@ -30,8 +30,8 @@ const BrandMarquee: React.FC = () => {
   ];
 
   return (
-    <div className='items-center overflow-hidden'>
-      <div className='flex animate-marquee space-x-8 whitespace-nowrap'>
+    <div className='items-center justify-center overflow-hidden h-full min-h-[100px]'>
+      <div className='flex animate-marquee space-x-8 whitespace-nowrap flex-shrink-0'>
         {logos.map((logo, index) => (
           <Image
             key={index}
