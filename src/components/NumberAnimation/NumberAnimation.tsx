@@ -1,17 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 interface NumberAnimationProps {
   target: number;
   duration?: number; // Duration in milliseconds
+  start: boolean; // New prop to control when the animation starts
 }
 
 const NumberAnimation: React.FC<NumberAnimationProps> = ({
   target,
   duration = 2000,
+  start,
 }) => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
+    if (!start) return; // Do nothing if the animation hasn't started
+
     const increment = target / (duration / 100); // Calculate increment based on duration
     let currentValue = 0;
     const interval = setInterval(() => {
@@ -25,9 +29,13 @@ const NumberAnimation: React.FC<NumberAnimationProps> = ({
     }, 100);
 
     return () => clearInterval(interval); // Cleanup interval on unmount
-  }, [target, duration]);
+  }, [target, duration, start]); // Run when target, duration, or start changes
 
-  return <div>{value}</div>; // Display the animated number
+  return (
+    <div className='font-bold text-[4.45rem] leading-none text-mbYellow'>
+      {value}
+    </div> // Display the animated number
+  );
 };
 
 export default NumberAnimation;

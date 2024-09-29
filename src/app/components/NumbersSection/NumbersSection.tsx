@@ -1,4 +1,5 @@
 'use client';
+import NumberAnimation from '@/components/NumberAnimation/NumberAnimation';
 import React, { useEffect, useRef, useState } from 'react';
 import SectionHeading from '@/components/SectionHeading/SectionHeading';
 import { motion } from 'framer-motion';
@@ -14,6 +15,7 @@ const data = [
 
 const NumbersSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [startAnimation, setStartAnimation] = useState(false); // State to control number animation
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,6 +23,7 @@ const NumbersSection: React.FC = () => {
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          setStartAnimation(true); // Start the number animation when section is visible
           observer.disconnect(); // Stop observing once the section is visible
         }
       },
@@ -88,9 +91,12 @@ const NumbersSection: React.FC = () => {
               <span className='font-dinot text-[1.2rem] text-white text-center tracking-[0.18rem] leading-none uppercase'>
                 {item.tagline}
               </span>
-              <span className='font-bold text-[4.45rem] leading-none text-mbYellow'>
-                {item.value}
-              </span>
+              <NumberAnimation
+                target={parseInt(item.value)}
+                duration={2000}
+                start={startAnimation}
+              />{' '}
+              {/* Pass the start state */}
             </motion.div>
           ))}
         </div>
