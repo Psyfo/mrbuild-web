@@ -2,8 +2,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Image from 'next/image';
-import { useEffect, useRef } from 'react';
+import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
+// import { useEffect, useRef } from 'react';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
@@ -59,16 +61,16 @@ const ServicesSlider = () => {
     },
   ];
 
-  const swiperRef = useRef<any>(null);
+  //   const swiperRef = useRef<any>(null);
 
-  useEffect(() => {
-    if (swiperRef.current && swiperRef.current.swiper) {
-      swiperRef.current.swiper.params.navigation.prevEl = '.custom-prev';
-      swiperRef.current.swiper.params.navigation.nextEl = '.custom-next';
-      swiperRef.current.swiper.navigation.init();
-      swiperRef.current.swiper.navigation.update();
-    }
-  }, []);
+  //   useEffect(() => {
+  //     if (swiperRef.current && swiperRef.current.swiper) {
+  //       swiperRef.current.swiper.params.navigation.prevEl = '.services-prev';
+  //       swiperRef.current.swiper.params.navigation.nextEl = '.services-next';
+  //       swiperRef.current.swiper.navigation.init();
+  //       swiperRef.current.swiper.navigation.update();
+  //     }
+  //   }, []);
 
   return (
     <Swiper
@@ -88,14 +90,13 @@ const ServicesSlider = () => {
           slidesPerView: 4,
         },
       }}
+      modules={[Navigation, Pagination]}
       navigation={{
-        nextEl: '#services-next',
-        prevEl: '#services-prev',
-        enabled: true,
+        nextEl: '.services-next, #services-next',
+        prevEl: '.services-prev, #services-prev',
       }}
       loop
       className=''
-      onSwiper={(swiper) => console.log(swiper)}
       onSlideChange={() => {}}
     >
       {services.map((service, index) => (
@@ -121,11 +122,27 @@ const ServicesSlider = () => {
               alt={service.heading}
               height={69}
               width={69}
-              className='absolute top-[40px] right-[60px] w-[3rem] lg:w-[4.3rem]'
+              className='absolute top-[40px] right-[60px] w-[3rem] lg:w-[4.3rem] h-auto'
             />
           </div>
         </SwiperSlide>
       ))}
+      <div className='lg:absolute top-[2rem] right-[2rem] flex mt-[2rem] gap-[2rem]'>
+        <Image
+          src='/images/services/arrow_left.svg'
+          alt='Left arrow'
+          width={20}
+          height={20}
+          className='services-prev w-[50px] lg:w-[90px] h-[50px] lg:h-[90px]'
+        />
+        <Image
+          src='/images/services/arrow_right.svg'
+          alt='Right arrow'
+          width={20}
+          height={20}
+          className='services-next w-[50px] lg:w-[90px] h-[50px] lg:h-[90px]'
+        />
+      </div>
     </Swiper>
   );
 };

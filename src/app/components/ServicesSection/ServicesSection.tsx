@@ -69,6 +69,25 @@ const ServicesSection: React.FC = () => {
           title='Our Services'
           subtitle='Tailored services for every space and vision'
         />
+        {/* LG Buttons */}
+        <div className='hidden lg:absolute top-[0rem] right-[2rem] lg:flex z-40 mt-[2rem] gap-[2rem]'>
+          <Image
+            src='/images/services/arrow_left.svg'
+            alt='Left arrow'
+            width={20}
+            height={20}
+            className='services-prev w-[50px] lg:w-[90px] h-[50px] lg:h-[90px]'
+            id='services-prev'
+          />
+          <Image
+            src='/images/services/arrow_right.svg'
+            alt='Right arrow'
+            width={20}
+            height={20}
+            className='services-next w-[50px] lg:w-[90px] h-[50px] lg:h-[90px]'
+            id='services-next'
+          />
+        </div>
       </motion.div>
 
       {/* Swiper Slider for Services */}
@@ -79,24 +98,6 @@ const ServicesSection: React.FC = () => {
         className='w-full mt-[2rem] px-[2rem] pb-[4rem]'
       >
         <ServicesSlider />
-        <div className='lg:absolute top-[2rem] right-[2rem] flex mt-[2rem] gap-[2rem]'>
-          <Image
-            src='/images/services/arrow_left.svg'
-            alt='Left arrow'
-            width={20}
-            height={20}
-            className='custom-prev w-[50px] lg:w-[90px] h-[50px] lg:h-[90px]'
-            id='services-prev'
-          />
-          <Image
-            src='/images/services/arrow_right.svg'
-            alt='Right arrow'
-            width={20}
-            height={20}
-            className='custom-next w-[50px] lg:w-[90px] h-[50px] lg:h-[90px]'
-            id='services-next'
-          />
-        </div>
       </motion.div>
     </section>
   );
