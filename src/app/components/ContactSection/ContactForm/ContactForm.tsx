@@ -120,7 +120,7 @@ const ContactForm: React.FC = () => {
         </div>
         <button
           type='submit'
-          className='w-auto px-[2rem] py-[0.6rem] bg-mbYellow font-dinot font-bold text-[19.39px] lg:text-[27px] leading-none text-mbDark rounded-full hover:bg-mbDark hover:text-mbYellow transition-colors'
+          className='px-6 py-3 bg-mbYellow text-mbDark font-dinot font-bold text-lg lg:text-xl rounded-full border-2 border-transparent hover:bg-mbDark hover:text-mbYellow hover:border-mbYellow shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-mbYellow focus:ring-opacity-50'
         >
           Submit
         </button>

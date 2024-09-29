@@ -73,9 +73,7 @@ const ContactSection: React.FC = () => {
           <ContactForm />
         </motion.div>
       </div>
-      <div className='hidden lg:block w-[60%] h-auto bg-[url("/images/contact/bg_contact_tools.png")] bg-cover bg-center'>
-        tools
-      </div>
+      <div className='hidden lg:block w-[60%] h-auto bg-[url("/images/contact/bg_contact_tools.png")] bg-cover bg-center'></div>
     </section>
   );
 };
