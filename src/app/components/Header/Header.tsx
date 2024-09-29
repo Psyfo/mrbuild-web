@@ -29,7 +29,7 @@ export default function Header() {
           isOpen ? 'block' : 'hidden'
         } lg:block`}
       >
-        <div className='fixed top-0 lg:top-[2rem] left-0 lg:left-1/2 lg:transform lg:-translate-x-1/2 flex flex-col py-[9rem] lg:py-[2rem] px-[2rem] w-full lg:w-auto h-screen lg:h-auto bg-mbDark font-aleo font-medium text-[2rem] lg:text-[1.1rem] text-white z-40 lg:rounded-full'>
+        <div className='fixed top-0 lg:top-[2rem] left-0 lg:left-1/2 lg:transform lg:-translate-x-1/2 flex flex-col py-[9rem] lg:py-[1.5rem] px-[2rem] w-full lg:w-auto h-screen lg:h-auto bg-mbDark font-dinot font-medium text-[2rem] lg:text-[19px] text-white leading-none z-40 lg:rounded-full'>
           <Image
             id='nav-close'
             src='/images/header/mb_hero.svg'
