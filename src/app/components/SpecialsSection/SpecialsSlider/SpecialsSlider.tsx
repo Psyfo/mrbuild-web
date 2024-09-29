@@ -3,6 +3,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import Image from 'next/image';
 import React from 'react';
+import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 const specials = [
@@ -28,19 +29,17 @@ const SpecialsSlider: React.FC = () => {
           slidesPerView: 3,
         },
       }}
+      modules={[Navigation, Pagination]}
       navigation={{
-        nextEl: '#services-next',
-        prevEl: '#services-prev',
-        enabled: true,
+        nextEl: '.specials-next',
+        prevEl: '.specials-prev',
       }}
       loop
       className=''
-      onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
     >
       {specials.map((specials, index) => (
         <SwiperSlide key={index}>
-          <div className='flex items-center'>
+          <div className='flex items-center justify-center]'>
             <Image
               src={specials.imageUrl}
               alt='Special'
@@ -48,7 +47,7 @@ const SpecialsSlider: React.FC = () => {
               height={100}
               unoptimized
               quality={100}
-              className='w-auto'
+              className='w-[100%] h-auto mx-auto'
             />
           </div>
         </SwiperSlide>
