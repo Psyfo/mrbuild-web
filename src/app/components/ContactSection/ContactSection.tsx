@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import SectionHeading from '@/components/SectionHeading/SectionHeading';
 import { motion } from 'framer-motion';
 
+/* eslint-disable react-hooks/exhaustive-deps */
+
 const ContactSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
