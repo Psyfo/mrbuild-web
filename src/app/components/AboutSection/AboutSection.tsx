@@ -6,7 +6,7 @@ const AboutSection: React.FC = () => {
     <section id='about' className='bg-black'>
       <div className="flex flex-col lg:flex-row w-full bg-[url('/images/about/mb_about_bg.png')] bg-cover bg-center bg-opacity-20 parallax">
         {/* Section Heading */}
-        <div className='lg:w-1/3 mt-[8rem] lg:mt-[12.5rem] mb-[2rem] '>
+        <div className='lg:w-1/3 mt-[12rem] lg:mt-[13.5rem] mb-[2rem] '>
           <SectionHeading title='About Us' />
         </div>
 
