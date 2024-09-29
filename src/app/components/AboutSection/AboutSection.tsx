@@ -17,7 +17,7 @@ const AboutSection: React.FC = () => {
           observer.disconnect(); // Stop observing once the section is visible
         }
       },
-      { threshold: 0.1 } // Adjust this value as needed
+      { threshold: 0.6 } // Adjust this value as needed
     );
 
     if (sectionRef.current) {

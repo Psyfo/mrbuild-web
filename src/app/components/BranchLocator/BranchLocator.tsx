@@ -1,8 +1,8 @@
-'use client';
-import BranchMap from './BranchMap/BranchMap';
-import React, { useEffect, useRef, useState } from 'react';
-import SectionHeading from '@/components/SectionHeading/SectionHeading';
-import { motion } from 'framer-motion';
+"use client";
+import BranchMap from "./BranchMap/BranchMap";
+import React, { useEffect, useRef, useState } from "react";
+import SectionHeading from "@/components/SectionHeading/SectionHeading";
+import { motion } from "framer-motion";
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -18,7 +18,7 @@ const BranchLocator: React.FC = () => {
           observer.disconnect(); // Stop observing once the section is visible
         }
       },
-      { threshold: 0.1 } // Adjust this value as needed
+      { threshold: 0.6 } // Adjust this value as needed
     );
 
     if (sectionRef.current) {
