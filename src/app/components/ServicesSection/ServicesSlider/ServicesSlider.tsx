@@ -96,7 +96,7 @@ const ServicesSlider = () => {
       loop
       className=''
       onSwiper={(swiper) => console.log(swiper)}
-      onSlideChange={() => console.log('slide change')}
+      onSlideChange={() => {}}
     >
       {services.map((service, index) => (
         <SwiperSlide key={index} className=''>
