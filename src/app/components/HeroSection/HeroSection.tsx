@@ -20,13 +20,14 @@ export default function HeroSection() {
         variants={imageVariants}
         initial='hidden'
         animate='visible' // Always animate to visible on load
-        className='max-w-full max-h-full object-contain w-[80%] md:w-[60%] lg:w-[50%]'
+        className='flex items-center max-w-full max-h-full object-contain w-[80%] md:w-[60%] lg:w-[50%]'
       >
         <Image
           src='/images/header/logo_mb_red.svg'
           alt='Hero Text'
           width={800}
           height={600}
+          className='w-full h-auto'
         />
       </motion.div>
 
