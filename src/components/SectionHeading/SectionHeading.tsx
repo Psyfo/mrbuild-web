@@ -25,7 +25,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
           className='w-[3.2rem] lg:w-[5.3rem]'
         />
         <h1
-          className={`font-aleo font-medium ${textColor} text-center text-[2rem] lg:text-[3.2rem]`}
+          className={`font-dinot font-medium ${textColor} text-center text-[2rem] lg:text-[3.2rem]`}
         >
           {title}
         </h1>
