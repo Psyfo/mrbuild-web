@@ -13,7 +13,13 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
   subtitle,
   color,
 }) => {
-  const textColor = color ? 'text-black' : 'text-white';
+  const textColor =
+    color === 'black'
+      ? 'text-black'
+      : color === 'yellow'
+      ? 'text-mbYellow'
+      : 'text-white';
+
   return (
     <div className='flex flex-col gap-[1rem] items-center'>
       <div className='flex flex-col lg:flex-row gap-[1rem] items-center justify-center'>
@@ -32,7 +38,7 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
       </div>
       {subtitle && (
         <h2
-          className={`md:max-w-[35rem] lg:max-w-[60rem] font-dinot ${textColor} text-center text-[1rem] lg:text-[1.6rem] tracking-[0.04rem] mb-[2rem]`}
+          className={`md:max-w-[35rem] lg:max-w-[60rem] font-dinot ${textColor} text-center text-[1rem] lg:text-[1.6rem] tracking-[0.04rem] mb-[2rem] px-12`}
         >
           {subtitle}
         </h2>
