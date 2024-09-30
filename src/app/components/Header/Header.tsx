@@ -1,7 +1,7 @@
-'use client';
-import Image from 'next/image';
-import { AnimatePresence, motion } from 'framer-motion';
-import { useState } from 'react';
+"use client";
+import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -96,7 +96,7 @@ export default function Header() {
                 ].map((item, index) => (
                   <motion.a
                     key={item}
-                    href={`#${item.toLowerCase().replace(' ', '-')}`}
+                    href={`/#${item.toLowerCase().replace(' ', '-')}`}
                     onClick={handleOptionClick}
                     className='hover:text-mbYellow'
                     custom={index}
