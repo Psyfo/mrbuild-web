@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -47,6 +47,7 @@ export default function Footer() {
             <a
               href='https://www.facebook.com/profile.php?id=61551736583171'
               target='_blank'
+              rel='noopener noreferrer'
             >
               Facebook
             </a>{' '}
@@ -54,6 +55,7 @@ export default function Footer() {
             <a
               href='https://www.instagram.com/mrbuild_sa/?hl=en'
               target='_blank'
+              rel='noopener noreferrer'
             >
               Instagram
             </a>
@@ -67,7 +69,7 @@ export default function Footer() {
       </div>
 
       {/* Copyright Notice */}
-      <div className='flex items-center justify-center mt-[2rem] font-dinot text-[11px] text-white'>
+      <div className='flex items-center justify-center mt-[2rem] font-dinot text-[11px] text-center text-white'>
         <span>
           Copyright © 2024  AfriBridge Outsourcing Solutions - All Rights
           Reserved
