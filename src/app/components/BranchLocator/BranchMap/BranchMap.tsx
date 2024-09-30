@@ -97,33 +97,41 @@ const BranchMap: React.FC = () => {
       </div>
 
       {/* Scrolling Branch List */}
-      <div className='absolute bottom-0 left-0 lg:top-0 z-10 flex flex-col items-center px-8 py-4 lg:py-8  w-full lg:w-[40%] rounded-t-3xl lg:rounded-tl-none max-h-[40%] lg:max-h-none bg-mbRed overflow-y-scroll font-dinot text-4 lg:text-8 text-white scrollable scrollbar-custom'>
-        <div className='border-[2px] border-white bg-white w-16 h-auto mb-0 divider divide-white lg:hidden'></div>
-        {branches.map((branch, index) => (
-          <div className='flex w-full mt-8 items-start gap-[25px]' key={index}>
-            <Image
-              src='/images/logo_mrbuild.svg'
-              alt='Mr Build Logo'
-              width={52}
-              height={57}
-              className='w-[52px]'
-            />
-            <div className=''>
-              <h2 className='font-bold text-[24px] lg:text-[34px] leading-none'>
-                {branch.branchName}
-              </h2>
-              <p>{branch.address1}</p>
-              <p>{branch.address2}</p>
-              <p>{branch.telephone}</p>
-              <p>{branch.email}</p>
-              <p className='mt-4 font-bold opacity-60 uppercase underline'>
-                <a onClick={() => handleGetDirections(branch.lat, branch.long)}>
-                  Get Directions
-                </a>
-              </p>
+      <div className='absolute bottom-0 left-0 lg:top-0 z-10 flex flex-col items-center px-4 py-4 lg:py-8  w-full lg:w-[40%] rounded-t-3xl lg:rounded-tl-none max-h-[40%] lg:max-h-none bg-mbRed overflow-y-scroll font-dinot text-4 lg:text-8 text-white '>
+        <div className='border-[2px] border-white bg-white w-16 h-auto mb-4 divider divide-white lg:hidden'></div>
+        {/* Scrolling list */}
+        <div className='flex flex-col items-center overflow-y-scroll scrollable scrollbar-custom pr-[2rem] lg:pr-[5rem]'>
+          {branches.map((branch, index) => (
+            <div
+              className='flex w-full mt-8 items-start gap-[25px]'
+              key={index}
+            >
+              <Image
+                src='/images/logo_mrbuild.svg'
+                alt='Mr Build Logo'
+                width={52}
+                height={57}
+                className='w-[52px]'
+              />
+              <div className=''>
+                <h2 className='font-bold text-[24px] lg:text-[34px] leading-none'>
+                  {branch.branchName}
+                </h2>
+                <p>{branch.address1}</p>
+                <p>{branch.address2}</p>
+                <p>{branch.telephone}</p>
+                <p>{branch.email}</p>
+                <p className='mt-4 font-bold opacity-60 uppercase underline'>
+                  <a
+                    onClick={() => handleGetDirections(branch.lat, branch.long)}
+                  >
+                    Get Directions
+                  </a>
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
