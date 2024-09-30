@@ -86,26 +86,28 @@ const SpecialsSection: React.FC = () => {
         variants={sliderVariants}
         initial='hidden'
         animate={isVisible ? 'visible' : 'hidden'}
-        className='relative w-full my-[2rem] px-[1rem] lg:px-[5rem]'
+        className='relative w-full my-[2rem] px-[2rem] lg:px-[5rem]'
       >
         <SpecialsSlider />
         {/* Carousel buttons */}
-        <Image
-          src='/images/services/arrow_left.svg'
-          alt='Left arrow'
-          width={20}
-          height={20}
-          className='specials-prev lg:block absolute bottom-[0rem] lg:bottom-[50%] left-4 z-20 transform translate-y-[120%] lg:translate-y-[50%] custom-prev w-[50px] h-[50px] lg:h-[90px]'
-          id='specials-prev'
-        />
-        <Image
-          src='/images/services/arrow_right.svg'
-          alt='Right arrow'
-          width={20}
-          height={20}
-          className='specials-next lg:block absolute bottom-[0rem] lg:bottom-[50%] right-4 z-20 transform translate-y-[120%] lg:translate-y-[50%] custom-next w-[50px] h-[50px] lg:h-[90px]'
-          id='specials-next'
-        />
+        <div className='lg:absolute top-[50%] right-[2rem] lg:right-0 w-auto lg:w-screen transform translate-y-[-50%] flex lg:justify-between lg:px-[1rem] mt-[2rem] lg:mt-0 gap-[2rem]'>
+          <Image
+            src='/images/services/arrow_left.svg'
+            alt='Left arrow'
+            width={20}
+            height={20}
+            className='specials-prev w-[50px] lg:w-[50px] h-[50px] lg:h-[50px]'
+            id='specials-prev'
+          />
+          <Image
+            src='/images/services/arrow_right.svg'
+            alt='Right arrow'
+            width={20}
+            height={20}
+            className='specials-next w-[50px] lg:w-[50px] h-[50px] lg:h-[50px]'
+            id='specials-next'
+          />
+        </div>
       </motion.div>
 
       {/* Follow links */}
