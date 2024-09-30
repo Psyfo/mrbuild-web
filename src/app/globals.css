@@ -101,4 +101,8 @@ body {
     .text-balance {
         text-wrap: balance;
     }
+
+    .clip-corner {
+        clip-path: polygon(100% 100%, 100% 0, 100% 55%, 3% 100%);
+    }
 }
