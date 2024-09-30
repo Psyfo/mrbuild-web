@@ -20,7 +20,7 @@ const BranchMap: React.FC = () => {
       long: 30.164830483251983,
     },
     {
-      branchName: 'Mr. Build Louis Trichard',
+      branchName: 'Mr. Build Louis Trichardt',
       address1: 'Cnr Rissik & Grobler Straat',
       address2: 'Louis Trichardt, 0920',
       telephone: '015 004 0168',
