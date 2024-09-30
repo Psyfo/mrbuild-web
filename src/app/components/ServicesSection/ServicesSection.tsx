@@ -69,25 +69,6 @@ const ServicesSection: React.FC = () => {
           title='Our Services'
           subtitle='Tailored services for every space and vision'
         />
-        {/* LG Buttons */}
-        <div className='hidden lg:absolute top-[0rem] right-[2rem] lg:flex z-40 mt-[2rem] gap-[2rem]'>
-          <Image
-            src='/images/services/arrow_left.svg'
-            alt='Left arrow'
-            width={20}
-            height={20}
-            className='services-prev w-[50px] lg:w-[90px] h-[50px] lg:h-[90px]'
-            id='services-prev'
-          />
-          <Image
-            src='/images/services/arrow_right.svg'
-            alt='Right arrow'
-            width={20}
-            height={20}
-            className='services-next w-[50px] lg:w-[90px] h-[50px] lg:h-[90px]'
-            id='services-next'
-          />
-        </div>
       </motion.div>
 
       {/* Swiper Slider for Services */}
@@ -95,9 +76,26 @@ const ServicesSection: React.FC = () => {
         variants={sliderVariants}
         initial='hidden'
         animate={isVisible ? 'visible' : 'hidden'}
-        className='w-full mt-[2rem] px-[2rem] pb-[4rem]'
+        className='w-full mt-[2rem] px-[2rem] lg:px-[6rem] mb-[4rem]'
       >
         <ServicesSlider />
+        {/* Small Buttons */}
+        <div className='lg:absolute top-[50%] right-[2rem] lg:right-0 w-auto lg:w-screen transform translate-y-[-50%] flex lg:justify-between lg:px-[1rem] mt-[2rem] lg:mt-0 gap-[2rem]'>
+          <Image
+            src='/images/services/arrow_left.svg'
+            alt='Left arrow'
+            width={20}
+            height={20}
+            className='services-prev w-[50px] lg:w-[50px] h-[50px] lg:h-[50px]'
+          />
+          <Image
+            src='/images/services/arrow_right.svg'
+            alt='Right arrow'
+            width={20}
+            height={20}
+            className='services-next w-[50px] lg:w-[50px] h-[50px] lg:h-[50px]'
+          />
+        </div>
       </motion.div>
     </section>
   );
