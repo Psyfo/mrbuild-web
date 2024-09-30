@@ -11,7 +11,7 @@ const Announcement: React.FC = () => {
           animate={{ x: ['100%', '-100%'] }} // Move from right to left
           transition={{
             repeat: Infinity, // Infinite loop
-            duration: 15, // Adjust speed (seconds)
+            duration: 25, // Adjust speed (seconds)
             ease: 'linear', // Smooth constant speed
           }}
         >
