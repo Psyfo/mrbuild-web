@@ -1,7 +1,7 @@
-"use client";
-import Image from "next/image";
-import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+'use client';
+import Image from 'next/image';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +49,7 @@ export default function Header() {
         alt='Header Image'
         width={28}
         height={28}
-        className='fixed top-[2.5rem] right-[2rem] lg:hidden z-30 w-[28px] h-[28px]'
+        className='fixed top-[2.5rem] right-[2rem] lg:hidden z-[90] w-[28px] h-[28px]'
         onClick={toggleMenu}
       />
 
@@ -57,7 +57,7 @@ export default function Header() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className={`lg:hidden fixed top-0 left-0 w-full h-full bg-mbDark z-40 flex justify-center items-center`}
+            className={`lg:hidden fixed top-0 left-0 w-full h-full bg-mbDark z-[100] flex justify-center items-center`}
             variants={menuVariants}
             initial='hidden'
             animate='visible'
@@ -82,7 +82,7 @@ export default function Header() {
                 height={28}
                 quality={100}
                 unoptimized
-                className='fixed top-[2.5rem] left-[2rem] lg:hidden z-30 w-[10rem] h-auto'
+                className='fixed top-[2.5rem] left-[2rem] lg:hidden z-[90] w-[10rem] h-auto'
                 onClick={toggleMenu}
               />
 
