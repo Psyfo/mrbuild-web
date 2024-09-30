@@ -86,7 +86,7 @@ export default function Header() {
                 onClick={toggleMenu}
               />
 
-              <nav className='flex flex-col gap-[1.5rem] items-center justify-center'>
+              <nav className='flex flex-col gap-[1.5rem] items-start justify-center'>
                 {[
                   'About',
                   'Services',
