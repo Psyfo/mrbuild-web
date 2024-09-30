@@ -78,16 +78,26 @@ const PromotionPage: React.FC = () => {
         </section>
 
         {/* Rules Section */}
-        <section className='py-[4rem]'>
+        <section className='py-[4rem] flex flex-col items-center'>
           <SectionHeading title='How it Works' color='yellow' />
           <div className='md:max-w-[35rem] lg:max-w-[60rem] font-dinot text-center text-[1rem] text-white lg:text-[1.6rem] tracking-[0.04rem] mb-[2rem] mt-4 px-12'>
-            Submit your receipt details, and you'll be entered into our lucky
-            draw, where one lucky customer will be randomly selected to WIN 1 of
-            16 KVA Generators. The more you shop, the better your chances!
+            Submit your receipt details in-store, and you'll be entered into our
+            lucky draw, where 16 lucky customers will be randomly selected to
+            WIN a 9 KVA generator. The more you shop, the better your chances!
           </div>
           <div className='md:max-w-[35rem] lg:max-w-[60rem] font-dinot text-center text-[1rem] text-white lg:text-[1.6rem] tracking-[0.04rem] mb-[2rem] px-12'>
             Download our pamphlet to check out the special prices this month for
             our exclusive birthday promotion!
+          </div>
+          <div className='w-screen flex items-center justify-center'>
+            <a
+              href='https://drive.google.com/uc?export=download&id=1uclVqq3_kSG3g9_bvBJVlrg3y_rMlAua'
+              download
+            >
+              <button className='px-6 py-3 bg-mbYellow text-mbDark font-dinot font-bold text-lg lg:text-xl rounded-full border-2 border-transparent hover:bg-mbDark hover:text-mbYellow hover:border-mbYellow shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-mbYellow focus:ring-opacity-50'>
+                Download
+              </button>
+            </a>
           </div>
         </section>
       </main>
