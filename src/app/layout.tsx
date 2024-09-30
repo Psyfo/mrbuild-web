@@ -1,7 +1,7 @@
-import "leaflet/dist/leaflet.css";
-import "./globals.css";
-import Head from "next/head";
-import type { Metadata } from "next";
+import 'leaflet/dist/leaflet.css';
+import './globals.css';
+import Head from 'next/head';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'Mr Build',
