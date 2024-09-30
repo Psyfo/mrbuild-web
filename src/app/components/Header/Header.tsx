@@ -125,7 +125,7 @@ export default function Header() {
           (item) => (
             <a
               key={item}
-              href={`#${item.toLowerCase().replace(' ', '-')}`}
+              href={`/#${item.toLowerCase().replace(' ', '-')}`}
               className='hover:text-mbYellow'
             >
               {item}
