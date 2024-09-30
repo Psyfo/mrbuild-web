@@ -52,7 +52,11 @@ const ContactSection: React.FC = () => {
   };
 
   return (
-    <section ref={sectionRef} id='contact' className='flex w-full bg-mbDark'>
+    <section
+      ref={sectionRef}
+      id='contact'
+      className='flex w-full bg-mbDark border-t-[9px] border-mbYellow'
+    >
       <div className='w-full lg:w-[40%] pb-[4rem]'>
         {/* Section Heading */}
         <motion.div

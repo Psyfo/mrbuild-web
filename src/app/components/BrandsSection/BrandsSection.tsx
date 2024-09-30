@@ -1,8 +1,8 @@
-"use client";
-import BrandMarquee from "./BrandMarquee/BrandMarquee";
-import React, { useEffect, useRef, useState } from "react";
-import SectionHeading from "@/components/SectionHeading/SectionHeading";
-import { motion } from "framer-motion";
+'use client';
+import BrandMarquee from './BrandMarquee/BrandMarquee';
+import React, { useEffect, useRef, useState } from 'react';
+import SectionHeading from '@/components/SectionHeading/SectionHeading';
+import { motion } from 'framer-motion';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -52,7 +52,11 @@ const BrandsSection: React.FC = () => {
   };
 
   return (
-    <section ref={sectionRef} id='brands' className='bg-white w-full'>
+    <section
+      ref={sectionRef}
+      id='brands'
+      className='bg-white w-full border-t-[9px] border-mbYellow'
+    >
       {/* Section Heading */}
       <motion.div
         variants={headingVariants}

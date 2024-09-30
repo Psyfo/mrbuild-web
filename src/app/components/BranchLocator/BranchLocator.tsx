@@ -1,8 +1,8 @@
-"use client";
-import BranchMap from "./BranchMap/BranchMap";
-import React, { useEffect, useRef, useState } from "react";
-import SectionHeading from "@/components/SectionHeading/SectionHeading";
-import { motion } from "framer-motion";
+'use client';
+import BranchMap from './BranchMap/BranchMap';
+import React, { useEffect, useRef, useState } from 'react';
+import SectionHeading from '@/components/SectionHeading/SectionHeading';
+import { motion } from 'framer-motion';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -52,7 +52,11 @@ const BranchLocator: React.FC = () => {
   };
 
   return (
-    <section ref={sectionRef} id='branch-locator' className='bg-mbDark'>
+    <section
+      ref={sectionRef}
+      id='branch-locator'
+      className='bg-mbDark border-t-[9px] border-mbYellow'
+    >
       {/* Section Heading */}
       <motion.div
         variants={headingVariants}
