@@ -15,10 +15,18 @@ const Announcement: React.FC = () => {
             ease: 'linear', // Smooth constant speed
           }}
         >
-          <span className='mr-[3rem]'>Win a generator birthday promo</span>
-          <span className='mr-[3rem]'>Win a generator birthday promo</span>
-          <span className='mr-[3rem]'>Win a generator birthday promo</span>
-          <span className='mr-[3rem]'>Win a generator birthday promo</span>
+          <span className='mr-[3rem]'>
+            BIRTHDAY SAVINGS: WIN 1 OF 16 9 KVA GENERATORS
+          </span>
+          <span className='mr-[3rem]'>
+            BIRTHDAY SAVINGS: WIN 1 OF 16 9 KVA GENERATORS
+          </span>
+          <span className='mr-[3rem]'>
+            BIRTHDAY SAVINGS: WIN 1 OF 16 9 KVA GENERATORS
+          </span>
+          <span className='mr-[3rem]'>
+            BIRTHDAY SAVINGS: WIN 1 OF 16 9 KVA GENERATORS
+          </span>
         </motion.div>
       </div>
     </a>
