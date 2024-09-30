@@ -2,12 +2,13 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 
-const BranchMap: React.FC = () => {
-  // Dynamically import the LeafletMap component with SSR disabled
-  const LeafletMap = dynamic(() => import('./LeafletMap/LeafletMap'), {
-    ssr: false,
-  });
+// Dynamically import the LeafletMap component with SSR disabled
+const LeafletMap = dynamic(() => import('./LeafletMap/LeafletMap'), {
+  ssr: false,
+});
 
+const BranchMap: React.FC = () => {
+  // Branch data
   const branches = [
     {
       branchName: 'Mr. Build Tzaneen',
@@ -84,9 +85,17 @@ const BranchMap: React.FC = () => {
   ];
 
   const [selectedBranch, setSelectedBranch] = useState<unknown | null>(null);
+  const [isExpanded, setIsExpanded] = useState(false); // Manage the height of the container
 
+  // Handle expanding/collapsing the branches tab
+  const handleExpand = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  // Handle "Get Directions" click, which will return the container to its original state
   const handleGetDirections = (lat: number, long: number) => {
     setSelectedBranch({ lat, long });
+    setIsExpanded(false); // Collapse the container after clicking "Get Directions"
   };
 
   return (
@@ -97,8 +106,19 @@ const BranchMap: React.FC = () => {
       </div>
 
       {/* Scrolling Branch List */}
-      <div className='absolute bottom-0 left-0 lg:top-0 z-10 flex flex-col items-center px-4 py-4 lg:py-8  w-full lg:w-[40%] rounded-t-3xl lg:rounded-tl-none max-h-[40%] lg:max-h-none bg-mbRed overflow-y-scroll font-dinot text-4 lg:text-8 text-white '>
-        <div className='border-[2px] border-white bg-white w-16 h-auto mb-4 divider divide-white lg:hidden'></div>
+      <div
+        id='branches-tab'
+        className={`absolute bottom-0 left-0 lg:top-0 z-10 flex flex-col items-center px-4 py-4 lg:py-8 w-full lg:w-[40%] rounded-t-3xl lg:rounded-tl-none ${
+          isExpanded ? 'max-h-[80%]' : 'max-h-[40%]'
+        } lg:max-h-none bg-mbRed overflow-y-scroll font-dinot text-4 lg:text-8 text-white transition-all duration-500 ease-in-out`}
+        onClick={handleExpand} // Toggle height on click anywhere on the tab
+      >
+        {/* Tab marker for expanding on mobile (purely decorative now) */}
+        <div
+          id='tab-marker'
+          className='border-[2px] border-white bg-white w-16 h-auto mb-4 divider divide-white lg:hidden'
+        ></div>
+
         {/* Scrolling list */}
         <div className='flex flex-col items-center overflow-y-scroll scrollable scrollbar-custom pr-[2rem] lg:pr-[5rem]'>
           {branches.map((branch, index) => (
