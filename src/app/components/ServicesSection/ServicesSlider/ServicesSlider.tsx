@@ -87,16 +87,16 @@ const ServicesSlider = () => {
           slidesPerView: 3,
         },
         1280: {
-          slidesPerView: 4,
+          slidesPerView: 3,
         },
       }}
       modules={[Navigation, Pagination]}
       navigation={{
-        nextEl: '.services-next, #services-next',
-        prevEl: '.services-prev, #services-prev',
+        nextEl: '.services-next',
+        prevEl: '.services-prev',
       }}
       loop
-      className=''
+      className='swiper-here'
       onSlideChange={() => {}}
     >
       {services.map((service, index) => (
@@ -127,22 +127,7 @@ const ServicesSlider = () => {
           </div>
         </SwiperSlide>
       ))}
-      <div className='lg:absolute top-[2rem] right-[2rem] flex mt-[2rem] gap-[2rem]'>
-        <Image
-          src='/images/services/arrow_left.svg'
-          alt='Left arrow'
-          width={20}
-          height={20}
-          className='services-prev w-[50px] lg:w-[90px] h-[50px] lg:h-[90px]'
-        />
-        <Image
-          src='/images/services/arrow_right.svg'
-          alt='Right arrow'
-          width={20}
-          height={20}
-          className='services-next w-[50px] lg:w-[90px] h-[50px] lg:h-[90px]'
-        />
-      </div>
+      {/* Buttons Here */}
     </Swiper>
   );
 };
