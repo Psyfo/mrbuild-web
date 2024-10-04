@@ -11,6 +11,8 @@ const specials = [
   { imageUrl: '/images/specials/special_2.png' },
   { imageUrl: '/images/specials/special_3.png' },
   { imageUrl: '/images/specials/special_4.png' },
+  { imageUrl: '/images/specials/special_5.png' },
+  { imageUrl: '/images/specials/special_6.png' },
 ];
 
 const SpecialsSlider: React.FC = () => {
