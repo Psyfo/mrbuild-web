@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -26,19 +26,19 @@ export default function Footer() {
         </div>
         <div className='py-[2rem] lg:px-[2rem]  border-b lg:border-b-0 lg:border-r-[1px] border-white lg:flex-1'>
           <p>
-            <a href='#about'>About</a>
+            <a href='/#about'>About</a>
           </p>
           <p>
-            <a href='#services'>Our Services</a>
+            <a href='/#services'>Our Services</a>
           </p>
           <p>
-            <a href='#branch-locator'>Branch Locator</a>
+            <a href='/#branch-locator'>Branch Locator</a>
           </p>
           <p>
-            <a href='#brands'>Brands</a>
+            <a href='/#brands'>Brands</a>
           </p>
           <p>
-            <a href='#contact'>Contact Us</a>
+            <a href='/#contact'>Contact Us</a>
           </p>
         </div>
         <div className='py-[2rem] lg:px-[2rem] lg:flex-1'>
