@@ -31,14 +31,14 @@ const SectionHeading: React.FC<SectionHeadingProps> = ({
           className='w-[3.2rem] lg:w-[5.3rem]'
         />
         <h1
-          className={`font-dinot font-medium ${textColor} text-center text-[2rem] lg:text-[3.2rem]`}
+          className={`font-aleo font-medium ${textColor} text-center text-[2rem] lg:text-[3.2rem]`}
         >
           {title}
         </h1>
       </div>
       {subtitle && (
         <h2
-          className={`md:max-w-[35rem] lg:max-w-[60rem] font-dinot ${textColor} text-center text-[1rem] lg:text-[1.6rem] tracking-[0.04rem] mb-[2rem] px-12`}
+          className={`md:max-w-[35rem] lg:max-w-[60rem] font-dinot ${textColor} text-center text-[0.9rem] lg:text-[1.3rem] tracking-[0.04rem] mb-[2rem] px-12`}
         >
           {subtitle}
         </h2>
