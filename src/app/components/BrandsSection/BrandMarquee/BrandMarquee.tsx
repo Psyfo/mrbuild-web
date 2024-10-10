@@ -34,7 +34,7 @@ const BrandMarquee: React.FC = () => {
   const getDuration = () => {
     if (typeof window !== 'undefined') {
       const screenWidth = window.innerWidth;
-      if (screenWidth >= 1024) return 50; // Slower on larger screens
+      if (screenWidth >= 1024) return 90; // Slower on larger screens
       if (screenWidth >= 768) return 30; // Medium speed on tablets
     }
     return 20; // Faster on mobile screens
