@@ -32,7 +32,7 @@ const NumberAnimation: React.FC<NumberAnimationProps> = ({
   }, [target, duration, start]); // Run when target, duration, or start changes
 
   return (
-    <div className='font-bold text-[4.45rem] leading-none text-mbYellow'>
+    <div className='font-aleo font-bold text-[4.45rem] leading-none text-mbYellow'>
       {value}
     </div> // Display the animated number
   );
