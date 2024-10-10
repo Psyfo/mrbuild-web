@@ -66,12 +66,12 @@ const BranchMap: React.FC = () => {
     },
     {
       branchName: 'The Builder Thohoyandou',
-      address1: 'Cnr Rissik & Grobler Straat',
-      address2: 'Louis Trichardt, 0920',
+      address1: '70 Mphepu Street,',
+      address2: 'Main Road, 0950 Thohoyandou',
       telephone: '015 962 5545',
       email: 'thohoyandou@thebuilder.co.za',
-      lat: -23.049124228049475,
-      long: 29.910482873433757,
+      lat: -22.98298122138363,
+      long: 30.456993058732582,
     },
     {
       branchName: 'The Builder Giyani',
