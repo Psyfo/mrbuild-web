@@ -68,29 +68,29 @@ const AboutSection: React.FC = () => {
 
         {/* About Text with Fade-in Animation */}
         <motion.div
-          className='flex-1 px-[3rem] pt-[2rem] pb-[6rem] lg:pb-[8rem] lg:mt-[12.5rem] bg-black bg-opacity-40 rounded-t-2xl font-dinot font-bold'
+          className='flex-1 px-[3rem] pt-[2rem] pb-[6rem] lg:pb-[8rem] lg:mt-[12.5rem] bg-black bg-opacity-40 rounded-t-2xl font-dinot'
           variants={textVariants}
           initial='hidden'
           animate={isVisible ? 'visible' : 'hidden'}
         >
-          <p className='text-white text-[1rem] lg:text-[1.56rem] text-center lg:text-left mb-8'>
+          <p className='text-white text-[0.95rem] lg:text-[1.2rem] text-center lg:text-left mb-8'>
             We specialize in high-quality building materials, tools, and
             accessories. Our knowledgeable and friendly support team is
             available to assist you with any inquiries, product recommendations,
             or technical assistance you may require.
           </p>
-          <p className='text-white text-[1rem] lg:text-[1.56rem] text-center lg:text-left mb-8'>
+          <p className='text-white text-[0.95rem] lg:text-[1.2rem] text-center lg:text-left mb-8'>
             We take pride in our commitment to customer satisfaction. We value
             your time and aim to provide prompt shipping and reliable delivery
             services, so you can start your projects without delay.
           </p>
-          <p className='text-white text-[1rem] lg:text-[1.56rem] text-center lg:text-left mb-8'>
+          <p className='text-white text-[0.95rem] lg:text-[1.2rem] text-center lg:text-left mb-8'>
             Mr. Build understands the importance of affordability. We offer
             competitive pricing on all our products, feature special promotions,
             discounts, and bundle deals, helping you save even more while
             maintaining the highest quality standards.
           </p>
-          <p className='text-white text-[1rem] lg:text-[1.56rem] text-center lg:text-left mb-8'>
+          <p className='text-white text-[0.95rem] lg:text-[1.2rem] text-center lg:text-left mb-8'>
             Join the Mr. Build community today with our extensive product range,
             superior customer service, and commitment to excellence, we are here
             to empower your building endeavors every step of the way.
