@@ -133,15 +133,15 @@ const BranchMap: React.FC = () => {
                 height={57}
                 className='w-[52px]'
               />
-              <div className=''>
-                <h2 className='font-bold text-[24px] lg:text-[34px] leading-none'>
+              <div className='font-dinot'>
+                <h2 className=' text-[24px] lg:text-[28px] leading-[40px]'>
                   {branch.branchName}
                 </h2>
                 <p>{branch.address1}</p>
                 <p>{branch.address2}</p>
                 <p>{branch.telephone}</p>
                 <p>{branch.email}</p>
-                <p className='mt-4 font-bold opacity-60 uppercase underline'>
+                <p className='mt-4 opacity-60 uppercase underline'>
                   <a
                     onClick={() => handleGetDirections(branch.lat, branch.long)}
                   >
