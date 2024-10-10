@@ -30,27 +30,27 @@ const BrandMarquee: React.FC = () => {
     '/images/brands/brand_waco.png',
   ];
 
+  // Adjust duration based on screen size
+  const getDuration = () => {
+    if (typeof window !== 'undefined') {
+      const screenWidth = window.innerWidth;
+      if (screenWidth >= 1024) return 50; // Slower on larger screens
+      if (screenWidth >= 768) return 30; // Medium speed on tablets
+    }
+    return 20; // Faster on mobile screens
+  };
+
   return (
     <div className='items-center justify-center overflow-hidden h-full min-h-[100px]'>
       <motion.div
         className='flex space-x-8 whitespace-nowrap items-center'
-        animate={{ x: ['100%', '-100%'] }} // Move logos from right to left
+        animate={{ x: ['100%', '-210%'] }}
         transition={{
-          repeat: Infinity, // Infinite loop
-          duration: 25, // Adjust speed (seconds)
-          ease: 'linear', // Smooth constant speed
+          repeat: Infinity,
+          duration: getDuration(), // Dynamically adjust duration
+          ease: 'linear',
         }}
       >
-        {logos.map((logo, index) => (
-          <Image
-            key={index}
-            src={logo}
-            alt={`Brand logo ${index + 1}`}
-            width={100}
-            height={96}
-            className='w-[20rem] h-auto object-contain'
-          />
-        ))}
         {logos.map((logo, index) => (
           <Image
             key={index}
