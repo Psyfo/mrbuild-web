@@ -111,7 +111,7 @@ const ServicesSlider = () => {
               unoptimized
               className='w-full h-auto mb-4'
             />
-            <h3 className='font-aleo font-medium text-[1.2rem] lg:text-[2.1rem] text-white mx-4 mb-2'>
+            <h3 className='font-aleo font-bold text-[1.2rem] lg:text-[2.1rem] text-white mx-4 mb-2'>
               {service.heading}
             </h3>
             <p className='h-[120px] overflow-y-auto font-dinot text-[14px] lg:text-[1rem] text-white mx-4 mb-8'>
