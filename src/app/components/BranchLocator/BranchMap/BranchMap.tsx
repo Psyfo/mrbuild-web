@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
+import { motion } from 'framer-motion';
 
 // Dynamically import the LeafletMap component with SSR disabled
 const LeafletMap = dynamic(() => import('./LeafletMap/LeafletMap'), {
@@ -106,10 +107,24 @@ const BranchMap: React.FC = () => {
       </div>
 
       {/* Scrolling Branch List */}
-      <div
+      <motion.div
+        drag='y'
+        dragConstraints={{ top: 0, bottom: 0 }}
+        dragElastic={0}
+        onDrag={(event, info) => {
+          if (info.offset.y < -30) {
+            setIsExpanded(true); // Expand on upward drag
+          } else if (info.offset.y > 30) {
+            setIsExpanded(false); // Collapse on downward drag
+          } else {
+            setIsExpanded(isExpanded); // Maintain current state
+          }
+        }}
         id='branches-tab'
         className={`absolute bottom-0 left-0 lg:top-0 z-10 flex flex-col items-center px-4 py-4 lg:py-8 w-full lg:w-[40%] rounded-t-3xl lg:rounded-tl-none ${
-          isExpanded ? 'max-h-[80%]' : 'max-h-[40%]'
+          isExpanded
+            ? 'max-h-[80%] lg:max-h-[100%]'
+            : 'max-h-[40%] lg:max-h-[100%]'
         } lg:max-h-none bg-mbRed overflow-y-scroll font-dinot text-4 lg:text-8 text-white transition-all duration-500 ease-in-out`}
         onClick={handleExpand} // Toggle height on click anywhere on the tab
       >
@@ -152,7 +167,7 @@ const BranchMap: React.FC = () => {
             </div>
           ))}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
