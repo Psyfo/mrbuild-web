@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const BrandMarquee: React.FC = () => {
   const logos = [
@@ -31,7 +32,15 @@ const BrandMarquee: React.FC = () => {
 
   return (
     <div className='items-center justify-center overflow-hidden h-full min-h-[100px]'>
-      <div className='flex animate-marquee space-x-8 whitespace-nowrap flex-shrink-0 items-center'>
+      <motion.div
+        className='flex space-x-8 whitespace-nowrap items-center'
+        animate={{ x: ['100%', '-100%'] }} // Move logos from right to left
+        transition={{
+          repeat: Infinity, // Infinite loop
+          duration: 25, // Adjust speed (seconds)
+          ease: 'linear', // Smooth constant speed
+        }}
+      >
         {logos.map((logo, index) => (
           <Image
             key={index}
@@ -39,7 +48,7 @@ const BrandMarquee: React.FC = () => {
             alt={`Brand logo ${index + 1}`}
             width={100}
             height={96}
-            className=' w-[20rem] h-auto object-contain'
+            className='w-[20rem] h-auto object-contain'
           />
         ))}
         {logos.map((logo, index) => (
@@ -49,10 +58,10 @@ const BrandMarquee: React.FC = () => {
             alt={`Brand logo ${index + 1}`}
             width={100}
             height={96}
-            className=' w-[20rem] h-auto object-contain'
+            className='w-[20rem] h-auto object-contain'
           />
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 };
