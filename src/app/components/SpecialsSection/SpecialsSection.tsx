@@ -75,9 +75,9 @@ const SpecialsSection: React.FC = () => {
       >
         <SectionHeading
           title='Exclusive In-Store Specials for the Month'
-          subtitle='Discover unbeatable deals on top-quality tools, hardware, and building
+          subtitle="Discover unbeatable deals on top-quality tools, hardware, and building
           supplies. Visit us in-store this month for limited-time offers you
-          won’t want to miss!'
+          won't want to miss!"
         />
       </motion.div>
 
