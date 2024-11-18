@@ -1,5 +1,4 @@
 import AboutSection from './components/AboutSection/AboutSection';
-import Announcement from './components/Announcement/Announcement';
 import BranchLocator from './components/BranchLocator/BranchLocator';
 import BrandsSection from './components/BrandsSection/BrandsSection';
 import ContactSection from './components/ContactSection/ContactSection';
