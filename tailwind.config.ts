@@ -27,6 +27,7 @@ const config: Config = {
       },
       animation: {
         marquee: 'marquee 15s linear infinite',
+        'pulse-slow': 'pulse 2.5s ease-in-out infinite',
       },
     },
   },
