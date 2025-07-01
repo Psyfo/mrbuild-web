@@ -1,35 +1,51 @@
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
 
-// app/api/contact/route.ts
-
 export async function POST(req: Request) {
   const { firstName, lastName, email, message } = await req.json();
 
-  // Create a Nodemailer transporter
   const transporter = nodemailer.createTransport({
-    host: 'smtppro.zoho.com', // Replace with your SMTP host
-    port: 465, // Common port for SMTP
-    secure: true, // Use true for 465, false for other ports
+    host: process.env.MAIL_HOST,
+    port: parseInt(process.env.MAIL_PORT ?? '465', 10),
+    secure: true,
     auth: {
-      user: '', // Replace with your email
-      pass: '', // Replace with your email password
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
     },
   });
 
-  // Email options
-  const mailOptions = {
-    from: `"Contact Form" <>`, // Sender address
-    to: '', // Recipient address
-    subject: 'New Contact Form Submission', // Subject line
-    text: `You have a new message from ${firstName} ${lastName} (${email}):\n\n${message}`, // Plain text body
-    html: `<p>You have a new message from <strong>${firstName} ${lastName}</strong> (<a href="mailto:${email}">${email}</a>):</p><p>${message}</p>`, // HTML body
+  const primaryMailOptions = {
+    from: `"Contact Form" <${process.env.MAIL_USER}>`,
+    to: process.env.MAIL_TO,
+    replyTo: email, // ✅ This allows you to hit reply and message the sender
+    subject: 'New Contact Form Submission',
+    text: `You have a new message from ${firstName} ${lastName} (${email}):\n\n${message}`,
+    html: `<p>You have a new message from <strong>${firstName} ${lastName}</strong> (<a href="mailto:${email}">${email}</a>):</p><p>${message}</p>`,
+  };
+
+  const confirmationMailOptions = {
+    from: `"MrBuild" <${process.env.MAIL_USER}>`,
+    to: email, // ✅ Send confirmation to the form submitter
+    subject: 'Thanks for reaching out to us!',
+    text: `Hi ${firstName},\n\nThank you for your message. We've received it and will get back to you as soon as possible.\n\n— The MrBuild Team`,
+    html: `<p>Hi <strong>${firstName}</strong>,</p>
+           <p>Thank you for reaching out. We've received your message and will be in touch shortly.</p>
+           <p>— The <strong>MrBuild</strong> Team</p>`,
   };
 
   try {
-    // Send the email
-    await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully');
+    console.log('Incoming form data:', {
+      firstName,
+      lastName,
+      email,
+      message,
+    });
+
+    // Send main notification
+    await transporter.sendMail(primaryMailOptions);
+
+    // Send confirmation to user
+    await transporter.sendMail(confirmationMailOptions);
 
     return NextResponse.json({
       success: true,
@@ -38,10 +54,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error('Error sending email:', error);
     return NextResponse.json(
-      {
-        success: false,
-        message: 'Failed to send message',
-      },
+      { success: false, message: 'Failed to send message' },
       { status: 500 }
     );
   }
