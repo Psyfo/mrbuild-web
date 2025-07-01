@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useState } from 'react';
 
 const ContactForm: React.FC = () => {
@@ -11,6 +12,7 @@ const ContactForm: React.FC = () => {
   const [formStatus, setFormStatus] = useState({
     success: false,
     error: false,
+    loading: false,
   });
 
   const handleChange = (
@@ -25,6 +27,7 @@ const ContactForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setFormStatus({ success: false, error: false, loading: true });
 
     try {
       const res = await fetch('/api/contact', {
@@ -36,14 +39,14 @@ const ContactForm: React.FC = () => {
       });
 
       if (res.ok) {
-        setFormStatus({ success: true, error: false });
-        setFormData({ firstName: '', lastName: '', email: '', message: '' }); // Reset the form
+        setFormStatus({ success: true, error: false, loading: false });
+        setFormData({ firstName: '', lastName: '', email: '', message: '' });
       } else {
-        setFormStatus({ success: false, error: true });
+        setFormStatus({ success: false, error: true, loading: false });
       }
     } catch (err) {
-      setFormStatus({ success: false, error: true });
       console.log(err);
+      setFormStatus({ success: false, error: true, loading: false });
     }
   };
 
@@ -120,19 +123,49 @@ const ContactForm: React.FC = () => {
         </div>
         <button
           type='submit'
-          className='px-6 py-3 bg-mbYellow text-mbDark font-dinot font-bold text-lg lg:text-xl rounded-full border-2 border-transparent hover:bg-mbDark hover:text-mbYellow hover:border-mbYellow shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-mbYellow focus:ring-opacity-50'
+          disabled={formStatus.loading}
+          className='px-6 py-3 bg-mbYellow text-mbDark font-dinot font-bold text-lg lg:text-xl rounded-full border-2 border-transparent hover:bg-mbDark hover:text-mbYellow hover:border-mbYellow shadow-lg hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-mbYellow focus:ring-opacity-50 disabled:opacity-60 disabled:cursor-not-allowed flex items-center gap-2'
         >
-          Submit
+          {formStatus.loading ? (
+            <>
+              Sending...
+              <Image
+                src='/images/logo_mrbuild.svg'
+                alt='Sending'
+                width={24}
+                height={24}
+                className='animate-pulse-slow'
+              />
+            </>
+          ) : (
+            'Submit'
+          )}
         </button>
       </form>
 
+      {/* {formStatus.loading && (
+        <div className='mt-4 flex justify-center items-center gap-2'>
+          <p className='text-mbYellow font-dinot text-lg'>
+            Sending your message...
+          </p>
+          <Image
+            src='/images/logo_mrbuild.svg'
+            alt='Sending'
+            width={32}
+            height={32}
+          />
+        </div>
+      )} */}
+
       {/* Show success or error messages */}
       {formStatus.success && (
-        <p className='text-green-600 mt-4'>Message sent successfully!</p>
+        <p className='mt-4 text-center text-lg font-dinot font-semibold text-green-400'>
+          ✅ Your message has been sent successfully!
+        </p>
       )}
       {formStatus.error && (
-        <p className='text-red-600 mt-4'>
-          Failed to send message. Try again later.
+        <p className='mt-4 text-center text-lg font-dinot font-semibold text-red-500'>
+          ❌ Something went wrong. Please try again later.
         </p>
       )}
     </div>
