@@ -9,6 +9,47 @@ import NumbersSection from './components/NumbersSection/NumbersSection';
 import ServicesSection from './components/ServicesSection/ServicesSection';
 import SpecialsSection from './components/SpecialsSection/SpecialsSection';
 
+// page metadata
+export const metadata = {
+  title: 'MrBuild | Home',
+  description:
+    'Welcome to MrBuild, your one-stop solution for all construction needs.',
+  keywords: 'construction, building materials, home improvement, MrBuild',
+  authors: [
+    {
+      name: 'MrBuild Team',
+      url: 'https://mrbuild.co.za',
+    },
+    {},
+  ],
+  openGraph: {
+    title: 'MrBuild | Home',
+    description:
+      'Welcome to MrBuild, your one-stop solution for all construction needs.',
+    url: 'https://mrbuild.co.za',
+    siteName: 'MrBuild',
+    images: [
+      {
+        url: 'https://mrbuild.co.za/images/header/mb-hero.svg',
+        width: 1200,
+        height: 630,
+        alt: 'MrBuild Home Page',
+      },
+    ],
+    locale: 'en_ZA',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'MrBuild | Home',
+    description:
+      'Welcome to MrBuild, your one-stop solution for all construction needs.',
+    images: ['https://mrbuild.co.za/images/header/mb-hero.svg'],
+    creator: 'Mr Build ZA',
+    site: 'https://mrbuild.co.za',
+  },
+};
+
 export default function Home() {
   return (
     <div>
