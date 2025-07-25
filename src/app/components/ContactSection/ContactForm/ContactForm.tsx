@@ -143,20 +143,6 @@ const ContactForm: React.FC = () => {
         </button>
       </form>
 
-      {/* {formStatus.loading && (
-        <div className='mt-4 flex justify-center items-center gap-2'>
-          <p className='text-mbYellow font-dinot text-lg'>
-            Sending your message...
-          </p>
-          <Image
-            src='/images/logo_mrbuild.svg'
-            alt='Sending'
-            width={32}
-            height={32}
-          />
-        </div>
-      )} */}
-
       {/* Show success or error messages */}
       {formStatus.success && (
         <p className='mt-4 text-center text-lg font-dinot font-semibold text-green-400'>
