@@ -1,7 +1,10 @@
 'use client';
-import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
 import { useState } from 'react';
+
+const navItems = ['About', 'Services', 'Brands', 'Branch Locator', 'Contact'];
+// removed Specials for now
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -87,13 +90,7 @@ export default function Header() {
               />
 
               <nav className='flex flex-col gap-[1.5rem] items-start justify-center'>
-                {[
-                  'About',
-                  'Services',
-                  'Specials',
-                  'Brands',
-                  'Branch Locator',
-                ].map((item, index) => (
+                {navItems.map((item, index) => (
                   <motion.a
                     key={item}
                     href={`/#${item.toLowerCase().replace(' ', '-')}`}
@@ -121,17 +118,15 @@ export default function Header() {
         initial='hidden'
         animate='visible'
       >
-        {['About', 'Services', 'Specials', 'Brands', 'Branch Locator'].map(
-          (item) => (
-            <a
-              key={item}
-              href={`/#${item.toLowerCase().replace(' ', '-')}`}
-              className='hover:text-mbYellow'
-            >
-              {item}
-            </a>
-          )
-        )}
+        {navItems.map((item) => (
+          <a
+            key={item}
+            href={`/#${item.toLowerCase().replace(' ', '-')}`}
+            className='hover:text-mbYellow'
+          >
+            {item}
+          </a>
+        ))}
       </motion.nav>
     </header>
   );
