@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MrBuild — Website
 
-## Getting Started
+A marketing website and storefront for MrBuild built with Next.js, Tailwind CSS and React. This repo contains the frontend, a small contact API route, and a collection of components for the main site.
 
-First, run the development server:
+Quick links
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Project config: [package.json](package.json)
+- Next.js config: [next.config.mjs](next.config.mjs)
+- Tailwind config: [tailwind.config.ts](tailwind.config.ts)
+- TypeScript config: [tsconfig.json](tsconfig.json)
+- Global styles: [src/app/globals.css](src/app/globals.css)
+- App root layout & site metadata: [`metadata`](src/app/layout.tsx) — see [src/app/layout.tsx](src/app/layout.tsx)
+- Contact API route: [src/app/api/contact/route.ts](src/app/api/contact/route.ts)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Important components (examples)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Section heading: [`SectionHeading`](src/components/SectionHeading/SectionHeading.tsx)
+- Animated numbers: [`NumberAnimation`](src/components/NumberAnimation/NumberAnimation.tsx)
+- Brand marquee: [`BrandMarquee`](src/app/components/BrandsSection/BrandMarquee/BrandMarquee.tsx)
+- Leaflet map: [`LeafletMap`](src/app/components/BranchLocator/BranchMap/LeafletMap/LeafletMap.tsx)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Getting started
 
-## Learn More
+Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js 18+ recommended
+- npm (or yarn/pnpm)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Local setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Install dependencies
 
-## Deploy on Vercel
+    ```sh
+    npm install
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Create a local environment file
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   - Copy .env.local.example (if present) or create `.env.local` and set environment variables used by the contact API:
+     - MAIL_HOST
+     - MAIL_PORT
+     - MAIL_USER
+     - MAIL_PASS
+     - MAIL_TO
+   These are consumed by [src/app/api/contact/route.ts](src/app/api/contact/route.ts).
+
+3. Run the dev server
+
+    ```sh
+    npm run dev
+    ```
+
+    Open <http://localhost:3000>
+
+    Available scripts (from [package.json](package.json))
+
+    - npm run dev — start development server
+    - npm run build — build for production
+    - npm run start — start production server
+    - npm run lint — run lint
+    - postbuild (runs next-sitemap)
+
+Notes & details
+
+- Styling: Tailwind CSS configuration is in [tailwind.config.ts](tailwind.config.ts). Fonts are loaded via [src/app/globals.css](src/app/globals.css).
+- Images & public assets: the repo uses the `public/` folder for logos, fonts and images.
+- Contact form: client form posts to the server route at [src/app/api/contact/route.ts](src/app/api/contact/route.ts). The route uses nodemailer and environment variables (see above).
+- Map: interactive branch map uses Leaflet via [src/app/components/BranchLocator/BranchMap/LeafletMap/LeafletMap.tsx](src/app/components/BranchLocator/BranchMap/LeafletMap/LeafletMap.tsx). Leaflet is dynamically imported for client-only rendering.
+
+Deployment
+
+- This project is compatible with Vercel and other Node hosting providers. Ensure environment variables for mail are set in your deployment provider.
+- After building, the repo runs `next-sitemap` (see [next-sitemap.config.js](next-sitemap.config.js)) via the `postbuild` script.
+
+Contributing
+
+- Feel free to open issues or PRs.
+- Follow existing component patterns and Tailwind utility classes.
+- Linting and TypeScript are enabled — run `npm run lint` and address issues.
+
+License
+
+This project is licensed under the MIT License — see the [LICENSE](./LICENSE) file for details.
