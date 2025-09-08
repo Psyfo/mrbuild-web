@@ -1,8 +1,10 @@
 'use client';
-import BranchMap from './BranchMap/BranchMap';
+import { motion, Variants } from 'framer-motion';
 import React, { useEffect, useRef, useState } from 'react';
+
 import SectionHeading from '@/components/SectionHeading/SectionHeading';
-import { motion } from 'framer-motion';
+
+import BranchMap from './BranchMap/BranchMap';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -18,7 +20,7 @@ const BranchLocator: React.FC = () => {
           observer.disconnect(); // Stop observing once the section is visible
         }
       },
-      { threshold: 0.6 } // Adjust this value as needed
+      { threshold: 0.4 } // Adjust this value as needed
     );
 
     if (sectionRef.current) {
@@ -33,7 +35,7 @@ const BranchLocator: React.FC = () => {
   }, []);
 
   // Variants for animations
-  const headingVariants = {
+  const headingVariants: Variants = {
     hidden: { opacity: 0, y: -20 }, // Start above
     visible: {
       opacity: 1,
@@ -42,7 +44,7 @@ const BranchLocator: React.FC = () => {
     },
   };
 
-  const infoVariants = {
+  const infoVariants: Variants = {
     hidden: { opacity: 0, y: 20 }, // Start below
     visible: {
       opacity: 1,
@@ -55,7 +57,7 @@ const BranchLocator: React.FC = () => {
     <section
       ref={sectionRef}
       id='branch-locator'
-      className='bg-mbDark border-t-[9px] border-mbYellow'
+      className='bg-mbDark border-mbYellow border-t-[9px]'
     >
       {/* Section Heading */}
       <motion.div
@@ -72,7 +74,7 @@ const BranchLocator: React.FC = () => {
           variants={infoVariants}
           initial='hidden'
           animate={isVisible ? 'visible' : 'hidden'}
-          className='round border-[3px] border-mbYellow rounded-lg mt-[1rem] mx-[0] px-[1rem] lg:px-[4rem] py-[1rem] font-dinot text-[1rem] lg:text-[1.9rem] text-white tracking-[0.04rem]'
+          className='mx-[0] mt-[1rem] px-[1rem] lg:px-[4rem] py-[1rem] border-[3px] border-mbYellow rounded-lg font-dinot text-[1rem] text-white lg:text-[1.9rem] tracking-[0.04rem] round'
         >
           <div className='mb-[1rem] lg:mb-[2rem]'>Our operating hours are:</div>
           <div className='flex'>
