@@ -29,7 +29,7 @@ export const metadata = {
     siteName: 'MrBuild',
     images: [
       {
-        url: 'https://mrbuild.co.za/images/header/mb-hero.svg',
+        url: 'https://mrbuild.co.za/images/logo_mrbuild.svg',
         width: 1200,
         height: 630,
         alt: 'MrBuild Home Page',
@@ -43,7 +43,7 @@ export const metadata = {
     title: 'MrBuild | Home',
     description:
       'Welcome to MrBuild, your one-stop solution for all construction needs.',
-    images: ['https://mrbuild.co.za/images/header/mb-hero.svg'],
+    images: ['https://mrbuild.co.za/images/logo_mrbuild.svg'],
     creator: 'Mr Build ZA',
     site: 'https://mrbuild.co.za',
   },
