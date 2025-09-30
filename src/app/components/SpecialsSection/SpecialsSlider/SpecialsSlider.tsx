@@ -1,18 +1,23 @@
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+
 import Image from 'next/image';
 import React from 'react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 const specials = [
-  { imageUrl: '/images/specials/special_1.png' },
-  { imageUrl: '/images/specials/special_2.png' },
-  { imageUrl: '/images/specials/special_3.png' },
-  { imageUrl: '/images/specials/special_4.png' },
-  { imageUrl: '/images/specials/special_5.png' },
-  { imageUrl: '/images/specials/special_6.png' },
+  { imageUrl: '/images/specials/1.png' },
+  { imageUrl: '/images/specials/2.png' },
+  { imageUrl: '/images/specials/3.png' },
+  { imageUrl: '/images/specials/4.png' },
+  { imageUrl: '/images/specials/5.png' },
+  { imageUrl: '/images/specials/6.png' },
+  { imageUrl: '/images/specials/7.png' },
+  { imageUrl: '/images/specials/8.png' },
+  { imageUrl: '/images/specials/9.png' },
+  { imageUrl: '/images/specials/10.png' },
 ];
 
 const SpecialsSlider: React.FC = () => {
@@ -41,7 +46,7 @@ const SpecialsSlider: React.FC = () => {
     >
       {specials.map((specials, index) => (
         <SwiperSlide key={index}>
-          <div className='flex items-center justify-center]'>
+          <div className='flex justify-center] items-center'>
             <Image
               src={specials.imageUrl}
               alt='Special'
@@ -49,7 +54,7 @@ const SpecialsSlider: React.FC = () => {
               height={100}
               unoptimized
               quality={100}
-              className='w-[100%] h-auto mx-auto'
+              className='mx-auto w-[100%] h-auto'
             />
           </div>
         </SwiperSlide>
