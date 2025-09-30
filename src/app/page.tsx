@@ -7,6 +7,7 @@ import Header from './components/Header/Header';
 import HeroSection from './components/HeroSection/HeroSection';
 import NumbersSection from './components/NumbersSection/NumbersSection';
 import ServicesSection from './components/ServicesSection/ServicesSection';
+import SpecialsSection from './components/SpecialsSection/SpecialsSection';
 
 // page metadata
 export const metadata = {
@@ -57,7 +58,7 @@ export default function Home() {
       <AboutSection />
       <ServicesSection />
       <NumbersSection />
-      {/* <SpecialsSection /> */}
+      <SpecialsSection />
       <BrandsSection />
       <BranchLocator />
       <ContactSection />
