@@ -1,9 +1,11 @@
 'use client';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
+
 import SectionHeading from '@/components/SectionHeading/SectionHeading';
+
 import SpecialsSlider from './SpecialsSlider/SpecialsSlider';
-import { motion } from 'framer-motion';
 
 /* eslint-disable react-hooks/exhaustive-deps */
 
@@ -19,7 +21,7 @@ const SpecialsSection: React.FC = () => {
           observer.disconnect(); // Stop observing once the section is visible
         }
       },
-      { threshold: 0.6 } // Adjust this value as needed
+      { threshold: 0.4 } // Adjust this value as needed
     );
 
     if (sectionRef.current) {
@@ -65,7 +67,7 @@ const SpecialsSection: React.FC = () => {
     <section
       ref={sectionRef}
       id='specials'
-      className='flex flex-col w-full py-[4rem] bg-mbDark border-t-[9px] border-mbYellow'
+      className='flex flex-col bg-mbDark py-[4rem] border-mbYellow border-t-[9px] w-full'
     >
       {/* Section Heading */}
       <motion.div
@@ -86,17 +88,17 @@ const SpecialsSection: React.FC = () => {
         variants={sliderVariants}
         initial='hidden'
         animate={isVisible ? 'visible' : 'hidden'}
-        className='relative w-full my-[2rem] px-[2rem] lg:px-[5rem]'
+        className='relative my-[2rem] px-[2rem] lg:px-[5rem] w-full'
       >
         <SpecialsSlider />
         {/* Carousel buttons */}
-        <div className='lg:absolute top-[50%] right-[2rem] lg:right-0 w-auto lg:w-screen transform translate-y-[-50%] flex lg:justify-between lg:px-[1rem] mt-[2rem] lg:mt-0 gap-[2rem]'>
+        <div className='top-[50%] right-[2rem] lg:right-0 lg:absolute flex lg:justify-between gap-[2rem] mt-[2rem] lg:mt-0 lg:px-[1rem] w-auto lg:w-screen translate-y-[-50%] transform'>
           <Image
             src='/images/services/arrow_left.svg'
             alt='Left arrow'
             width={20}
             height={20}
-            className='specials-prev w-[50px] lg:w-[50px] h-[50px] lg:h-[50px]'
+            className='w-[50px] lg:w-[50px] h-[50px] lg:h-[50px] specials-prev'
             id='specials-prev'
           />
           <Image
@@ -104,7 +106,7 @@ const SpecialsSection: React.FC = () => {
             alt='Right arrow'
             width={20}
             height={20}
-            className='specials-next w-[50px] lg:w-[50px] h-[50px] lg:h-[50px]'
+            className='w-[50px] lg:w-[50px] h-[50px] lg:h-[50px] specials-next'
             id='specials-next'
           />
         </div>
@@ -115,9 +117,9 @@ const SpecialsSection: React.FC = () => {
         variants={followLinksVariants}
         initial='hidden'
         animate={isVisible ? 'visible' : 'hidden'}
-        className='flex flex-col gap-[1.5rem] items-center mt-[6rem]'
+        className='flex flex-col items-center gap-[1.5rem] mt-[6rem]'
       >
-        <span className='font-dinot text-white text-center text-[1rem] lg:text-[1.6rem] tracking-[0.04rem] mb-[2rem]'>
+        <span className='mb-[2rem] font-dinot text-[1rem] text-white lg:text-[1.6rem] text-center tracking-[0.04rem]'>
           Follow us to stay up to date with our specials
         </span>
         <div className='flex gap-[2rem]'>

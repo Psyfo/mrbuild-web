@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from 'react';
 
-const navItems = ['About', 'Services', 'Brands', 'Branch Locator', 'Contact'];
+const navItems = ['About', 'Services', 'Brands', 'Specials', 'Branch Locator', 'Contact'];
 // removed Specials for now
 
 export default function Header() {
@@ -52,7 +52,7 @@ export default function Header() {
         alt='Header Image'
         width={28}
         height={28}
-        className='fixed top-[2.5rem] right-[2rem] lg:hidden z-[90] w-[28px] h-[28px]'
+        className='lg:hidden top-[2.5rem] right-[2rem] z-[90] fixed w-[28px] h-[28px]'
         onClick={toggleMenu}
       />
 
@@ -67,14 +67,14 @@ export default function Header() {
             exit='hidden'
             transition={{ duration: 0.5 }}
           >
-            <div className='flex flex-col py-[9rem] px-[2rem] w-full h-screen bg-mbDark font-dinot font-medium text-[2rem] text-white leading-none'>
+            <div className='flex flex-col bg-mbDark px-[2rem] py-[9rem] w-full h-screen font-dinot font-medium text-[2rem] text-white leading-none'>
               {/* Mobile Nav Close Button */}
               <Image
                 src='/images/header/nav_cross.tif.svg'
                 alt='Close Menu'
                 width={28}
                 height={28}
-                className='absolute top-[2.5rem] right-[2rem]'
+                className='top-[2.5rem] right-[2rem] absolute'
                 onClick={toggleMenu}
               />
 
@@ -85,11 +85,11 @@ export default function Header() {
                 height={28}
                 quality={100}
                 unoptimized
-                className='fixed top-[2.5rem] left-[2rem] lg:hidden z-[90] w-[10rem] h-auto'
+                className='lg:hidden top-[2.5rem] left-[2rem] z-[90] fixed w-[10rem] h-auto'
                 onClick={toggleMenu}
               />
 
-              <nav className='flex flex-col gap-[1.5rem] items-start justify-center'>
+              <nav className='flex flex-col justify-center items-start gap-[1.5rem]'>
                 {navItems.map((item, index) => (
                   <motion.a
                     key={item}
@@ -113,7 +113,7 @@ export default function Header() {
 
       {/* Always visible navigation for larger screens with fade-in effect */}
       <motion.nav
-        className='hidden fixed top-[2rem] left-0 right-0 z-40 lg:flex lg:flex-row gap-[1.5rem] lg:gap-[2rem] items-center justify-center font-dinot text-[19px] text-white leading-none bg-[#0D0D0D] px-[3rem] py-[2rem] rounded-full mx-auto w-fit'
+        className='hidden top-[2rem] right-0 left-0 z-40 fixed lg:flex lg:flex-row justify-center items-center gap-[1.5rem] lg:gap-[2rem] bg-[#0D0D0D] mx-auto px-[3rem] py-[2rem] rounded-full w-fit font-dinot text-[19px] text-white leading-none'
         variants={desktopNavVariants}
         initial='hidden'
         animate='visible'
