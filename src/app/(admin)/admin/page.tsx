@@ -1,6 +1,7 @@
 'use client';
 
 import { useSession, signOut } from 'next-auth/react';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -24,6 +25,9 @@ export default function AdminDashboard() {
   const { data: session, status } = useSession();
 
   const handleSignOut = async () => {
+    toast.warning('Logging out...', {
+      description: 'You are being signed out of the admin portal.',
+    });
     await signOut({ callbackUrl: '/login' });
   };
 
@@ -70,7 +74,7 @@ export default function AdminDashboard() {
                     className='relative rounded-full w-10 h-10'
                   >
                     <Avatar>
-                      <AvatarFallback className='bg-gray-900 text-white'>
+                      <AvatarFallback className='bg-gray-200 text-gray-900'>
                         {getInitials(session?.user?.name)}
                       </AvatarFallback>
                     </Avatar>
