@@ -15,6 +15,15 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import {
+  validateEmail,
+  validateName,
+  validatePassword,
+  validatePasswordMatch,
+  validateRequired,
+  PasswordRequirement,
+} from '@/lib/validation';
+import { PasswordRequirements } from '@/components/PasswordRequirements/PasswordRequirements';
 
 export default function AdminSetupPage() {
   const router = useRouter();
@@ -31,51 +40,66 @@ export default function AdminSetupPage() {
   const [validationErrors, setValidationErrors] = useState<{
     [key: string]: string;
   }>({});
+  const [touched, setTouched] = useState<{
+    [key: string]: boolean;
+  }>({});
+  const [passwordRequirements, setPasswordRequirements] = useState<
+    PasswordRequirement[]
+  >([]);
+  const [showPasswordRequirements, setShowPasswordRequirements] =
+    useState(false);
+  const [showConfirmPasswordMismatch, setShowConfirmPasswordMismatch] =
+    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const validateForm = () => {
     const errors: { [key: string]: string } = {};
 
     // Name validation
-    if (!formData.name.trim()) {
-      errors.name = 'Name is required';
-    } else if (formData.name.trim().length < 2) {
-      errors.name = 'Name must be at least 2 characters';
+    const nameValidation = validateName(formData.name, 'Full name');
+    if (!nameValidation.isValid) {
+      errors.name = nameValidation.message!;
     }
 
     // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!formData.email) {
-      errors.email = 'Email is required';
-    } else if (!emailRegex.test(formData.email)) {
-      errors.email = 'Please enter a valid email address';
+    const emailValidation = validateEmail(formData.email);
+    if (!emailValidation.isValid) {
+      errors.email = emailValidation.message!;
     }
 
     // Password validation
-    if (!formData.password) {
-      errors.password = 'Password is required';
-    } else if (formData.password.length < 8) {
-      errors.password = 'Password must be at least 8 characters';
-    } else if (!/(?=.*[a-z])/.test(formData.password)) {
-      errors.password = 'Password must contain at least one lowercase letter';
-    } else if (!/(?=.*[A-Z])/.test(formData.password)) {
-      errors.password = 'Password must contain at least one uppercase letter';
-    } else if (!/(?=.*\d)/.test(formData.password)) {
-      errors.password = 'Password must contain at least one number';
+    const passwordValidation = validatePassword(formData.password);
+    if (!passwordValidation.isValid) {
+      errors.password = passwordValidation.message!;
     }
 
-    // Confirm password validation
-    if (!formData.confirmPassword) {
-      errors.confirmPassword = 'Please confirm your password';
-    } else if (formData.password !== formData.confirmPassword) {
-      errors.confirmPassword = 'Passwords do not match';
+    // Confirm password validation - show mismatch on submit
+    const confirmPasswordValidation = validatePasswordMatch(
+      formData.password,
+      formData.confirmPassword,
+      true
+    );
+    if (!confirmPasswordValidation.isValid) {
+      errors.confirmPassword = confirmPasswordValidation.message!;
     }
 
     // Secret validation
-    if (!formData.secret) {
-      errors.secret = 'Setup secret is required';
+    const secretValidation = validateRequired(formData.secret, 'Setup secret');
+    if (!secretValidation.isValid) {
+      errors.secret = secretValidation.message!;
     }
 
     setValidationErrors(errors);
+    // Mark all fields as touched on submit
+    setTouched({
+      name: true,
+      email: true,
+      password: true,
+      confirmPassword: true,
+      secret: true,
+    });
+    setShowConfirmPasswordMismatch(true);
     return Object.keys(errors).length === 0;
   };
 
@@ -162,9 +186,143 @@ export default function AdminSetupPage() {
 
   const handleInputChange = (field: string, value: string) => {
     setFormData({ ...formData, [field]: value });
-    // Clear validation error for this field when user starts typing
-    if (validationErrors[field]) {
-      setValidationErrors({ ...validationErrors, [field]: '' });
+
+    // Real-time validation if field has been touched
+    if (touched[field]) {
+      let fieldValidation;
+
+      switch (field) {
+        case 'name':
+          fieldValidation = validateName(value, 'Full name');
+          setValidationErrors({
+            ...validationErrors,
+            name: fieldValidation.isValid ? '' : fieldValidation.message!,
+          });
+          break;
+        case 'email':
+          fieldValidation = validateEmail(value);
+          setValidationErrors({
+            ...validationErrors,
+            email: fieldValidation.isValid ? '' : fieldValidation.message!,
+          });
+          break;
+        case 'password':
+          const passwordValidation = validatePassword(value);
+          setPasswordRequirements(passwordValidation.requirements);
+          setValidationErrors({
+            ...validationErrors,
+            password: passwordValidation.isValid
+              ? ''
+              : passwordValidation.message!,
+          });
+          // Re-validate confirm password if it has content
+          if (formData.confirmPassword && showConfirmPasswordMismatch) {
+            const confirmValidation = validatePasswordMatch(
+              value,
+              formData.confirmPassword,
+              true
+            );
+            setValidationErrors((prev) => ({
+              ...prev,
+              password: passwordValidation.isValid
+                ? ''
+                : passwordValidation.message!,
+              confirmPassword: confirmValidation.isValid
+                ? ''
+                : confirmValidation.message!,
+            }));
+          }
+          break;
+        case 'confirmPassword':
+          // Only show mismatch if user has finished typing (on blur/submit)
+          if (showConfirmPasswordMismatch) {
+            const confirmValidation = validatePasswordMatch(
+              formData.password,
+              value,
+              true
+            );
+            setValidationErrors({
+              ...validationErrors,
+              confirmPassword: confirmValidation.isValid
+                ? ''
+                : confirmValidation.message!,
+            });
+          }
+          break;
+        case 'secret':
+          fieldValidation = validateRequired(value, 'Setup secret');
+          setValidationErrors({
+            ...validationErrors,
+            secret: fieldValidation.isValid ? '' : fieldValidation.message!,
+          });
+          break;
+      }
+    }
+  };
+
+  const handleFieldBlur = (field: string) => {
+    setTouched({ ...touched, [field]: true });
+
+    // Validate on blur
+    let fieldValidation;
+
+    switch (field) {
+      case 'name':
+        fieldValidation = validateName(formData.name, 'Full name');
+        setValidationErrors({
+          ...validationErrors,
+          name: fieldValidation.isValid ? '' : fieldValidation.message!,
+        });
+        break;
+      case 'email':
+        fieldValidation = validateEmail(formData.email);
+        setValidationErrors({
+          ...validationErrors,
+          email: fieldValidation.isValid ? '' : fieldValidation.message!,
+        });
+        break;
+      case 'password':
+        const passwordValidation = validatePassword(formData.password);
+        setPasswordRequirements(passwordValidation.requirements);
+        setValidationErrors({
+          ...validationErrors,
+          password: passwordValidation.isValid
+            ? ''
+            : passwordValidation.message!,
+        });
+        setShowPasswordRequirements(false);
+        break;
+      case 'confirmPassword':
+        // Show mismatch error on blur
+        setShowConfirmPasswordMismatch(true);
+        const confirmValidation = validatePasswordMatch(
+          formData.password,
+          formData.confirmPassword,
+          true
+        );
+        setValidationErrors({
+          ...validationErrors,
+          confirmPassword: confirmValidation.isValid
+            ? ''
+            : confirmValidation.message!,
+        });
+        break;
+      case 'secret':
+        fieldValidation = validateRequired(formData.secret, 'Setup secret');
+        setValidationErrors({
+          ...validationErrors,
+          secret: fieldValidation.isValid ? '' : fieldValidation.message!,
+        });
+        break;
+    }
+  };
+
+  const handlePasswordFocus = () => {
+    setShowPasswordRequirements(true);
+    // Initialize requirements if not already done
+    if (passwordRequirements.length === 0) {
+      const passwordValidation = validatePassword(formData.password);
+      setPasswordRequirements(passwordValidation.requirements);
     }
   };
 
@@ -188,7 +346,7 @@ export default function AdminSetupPage() {
             Create the initial admin account for Mr Build
           </CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <CardContent className='space-y-4'>
             {error && (
               <div className='bg-destructive/15 slide-in-from-top-2 p-3 border border-destructive/30 rounded-md text-destructive text-sm animate-in duration-300'>
@@ -257,13 +415,38 @@ export default function AdminSetupPage() {
                 placeholder='John Doe'
                 value={formData.name}
                 onChange={(e) => handleInputChange('name', e.target.value)}
-                required
+                onBlur={() => handleFieldBlur('name')}
                 disabled={isLoading || !!success}
-                className={validationErrors.name ? 'border-red-500' : ''}
+                className={
+                  validationErrors.name && touched.name
+                    ? 'border-red-500 focus-visible:ring-red-500'
+                    : ''
+                }
                 autoFocus
+                aria-invalid={!!validationErrors.name && touched.name}
+                aria-describedby={
+                  validationErrors.name && touched.name
+                    ? 'name-error'
+                    : undefined
+                }
               />
-              {validationErrors.name && (
-                <p className='slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'>
+              {validationErrors.name && touched.name && (
+                <p
+                  id='name-error'
+                  className='flex items-center gap-1.5 slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'
+                  role='alert'
+                >
+                  <svg
+                    className='flex-shrink-0 w-3.5 h-3.5'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
                   {validationErrors.name}
                 </p>
               )}
@@ -276,55 +459,234 @@ export default function AdminSetupPage() {
                 placeholder='admin@mrbuild.co.za'
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
-                required
+                onBlur={() => handleFieldBlur('email')}
                 disabled={isLoading || !!success}
-                className={validationErrors.email ? 'border-red-500' : ''}
+                className={
+                  validationErrors.email && touched.email
+                    ? 'border-red-500 focus-visible:ring-red-500'
+                    : ''
+                }
+                autoComplete='email'
+                aria-invalid={!!validationErrors.email && touched.email}
+                aria-describedby={
+                  validationErrors.email && touched.email
+                    ? 'email-error'
+                    : undefined
+                }
               />
-              {validationErrors.email && (
-                <p className='slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'>
+              {validationErrors.email && touched.email && (
+                <p
+                  id='email-error'
+                  className='flex items-center gap-1.5 slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'
+                  role='alert'
+                >
+                  <svg
+                    className='flex-shrink-0 w-3.5 h-3.5'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
                   {validationErrors.email}
                 </p>
               )}
             </div>
             <div className='space-y-2'>
               <Label htmlFor='password'>Password</Label>
-              <Input
-                id='password'
-                type='password'
-                placeholder='••••••••'
-                value={formData.password}
-                onChange={(e) => handleInputChange('password', e.target.value)}
-                required
-                disabled={isLoading || !!success}
-                className={validationErrors.password ? 'border-red-500' : ''}
-              />
-              {validationErrors.password && (
-                <p className='slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'>
+              <div className='relative'>
+                <Input
+                  id='password'
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder='••••••••'
+                  value={formData.password}
+                  onChange={(e) =>
+                    handleInputChange('password', e.target.value)
+                  }
+                  onFocus={handlePasswordFocus}
+                  onBlur={() => handleFieldBlur('password')}
+                  disabled={isLoading || !!success}
+                  className={
+                    validationErrors.password && touched.password
+                      ? 'border-red-500 focus-visible:ring-red-500 pr-10'
+                      : 'pr-10'
+                  }
+                  autoComplete='new-password'
+                  aria-invalid={!!validationErrors.password && touched.password}
+                  aria-describedby={
+                    validationErrors.password && touched.password
+                      ? 'password-error'
+                      : 'password-requirements'
+                  }
+                />
+                <button
+                  type='button'
+                  onClick={() => setShowPassword(!showPassword)}
+                  className='top-1/2 right-3 absolute text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 dark:text-gray-400 transition-colors -translate-y-1/2'
+                  tabIndex={-1}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? (
+                    <svg
+                      className='w-5 h-5'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21'
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className='w-5 h-5'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+                      />
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              {validationErrors.password && touched.password && (
+                <p
+                  id='password-error'
+                  className='flex items-center gap-1.5 slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'
+                  role='alert'
+                >
+                  <svg
+                    className='flex-shrink-0 w-3.5 h-3.5'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
                   {validationErrors.password}
                 </p>
               )}
-              <p className='text-muted-foreground text-xs'>
-                Must be 8+ characters with uppercase, lowercase, and number
-              </p>
+              <div id='password-requirements'>
+                <PasswordRequirements
+                  requirements={passwordRequirements}
+                  show={
+                    showPasswordRequirements || formData.password.length > 0
+                  }
+                />
+              </div>
             </div>
             <div className='space-y-2'>
               <Label htmlFor='confirmPassword'>Confirm Password</Label>
-              <Input
-                id='confirmPassword'
-                type='password'
-                placeholder='••••••••'
-                value={formData.confirmPassword}
-                onChange={(e) =>
-                  handleInputChange('confirmPassword', e.target.value)
-                }
-                required
-                disabled={isLoading || !!success}
-                className={
-                  validationErrors.confirmPassword ? 'border-red-500' : ''
-                }
-              />
-              {validationErrors.confirmPassword && (
-                <p className='slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'>
+              <div className='relative'>
+                <Input
+                  id='confirmPassword'
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  placeholder='••••••••'
+                  value={formData.confirmPassword}
+                  onChange={(e) =>
+                    handleInputChange('confirmPassword', e.target.value)
+                  }
+                  onBlur={() => handleFieldBlur('confirmPassword')}
+                  disabled={isLoading || !!success}
+                  className={
+                    validationErrors.confirmPassword && touched.confirmPassword
+                      ? 'border-red-500 focus-visible:ring-red-500 pr-10'
+                      : 'pr-10'
+                  }
+                  autoComplete='new-password'
+                  aria-invalid={
+                    !!validationErrors.confirmPassword &&
+                    touched.confirmPassword
+                  }
+                  aria-describedby={
+                    validationErrors.confirmPassword && touched.confirmPassword
+                      ? 'confirm-password-error'
+                      : undefined
+                  }
+                />
+                <button
+                  type='button'
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className='top-1/2 right-3 absolute text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 dark:text-gray-400 transition-colors -translate-y-1/2'
+                  tabIndex={-1}
+                  aria-label={
+                    showConfirmPassword ? 'Hide password' : 'Show password'
+                  }
+                >
+                  {showConfirmPassword ? (
+                    <svg
+                      className='w-5 h-5'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21'
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className='w-5 h-5'
+                      fill='none'
+                      stroke='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+                      />
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'
+                      />
+                    </svg>
+                  )}
+                </button>
+              </div>
+              {validationErrors.confirmPassword && touched.confirmPassword && (
+                <p
+                  id='confirm-password-error'
+                  className='flex items-center gap-1.5 slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'
+                  role='alert'
+                >
+                  <svg
+                    className='flex-shrink-0 w-3.5 h-3.5'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
                   {validationErrors.confirmPassword}
                 </p>
               )}
@@ -337,16 +699,42 @@ export default function AdminSetupPage() {
                 placeholder='From .env.local ADMIN_SETUP_SECRET'
                 value={formData.secret}
                 onChange={(e) => handleInputChange('secret', e.target.value)}
-                required
+                onBlur={() => handleFieldBlur('secret')}
                 disabled={isLoading || !!success}
-                className={validationErrors.secret ? 'border-red-500' : ''}
+                className={
+                  validationErrors.secret && touched.secret
+                    ? 'border-red-500 focus-visible:ring-red-500'
+                    : ''
+                }
+                autoComplete='off'
+                aria-invalid={!!validationErrors.secret && touched.secret}
+                aria-describedby={
+                  validationErrors.secret && touched.secret
+                    ? 'secret-error'
+                    : 'secret-help'
+                }
               />
-              {validationErrors.secret && (
-                <p className='slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'>
+              {validationErrors.secret && touched.secret && (
+                <p
+                  id='secret-error'
+                  className='flex items-center gap-1.5 slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'
+                  role='alert'
+                >
+                  <svg
+                    className='flex-shrink-0 w-3.5 h-3.5'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
                   {validationErrors.secret}
                 </p>
               )}
-              <p className='text-muted-foreground text-xs'>
+              <p id='secret-help' className='text-muted-foreground text-xs'>
                 This is the ADMIN_SETUP_SECRET from your .env.local file
               </p>
             </div>

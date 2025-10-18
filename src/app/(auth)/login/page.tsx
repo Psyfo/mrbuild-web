@@ -17,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { validateEmail, validateRequired } from '@/lib/validation';
 
 function LoginForm() {
   const router = useRouter();
@@ -31,6 +32,13 @@ function LoginForm() {
     email?: string;
     password?: string;
   }>({});
+  const [touched, setTouched] = useState<{
+    email: boolean;
+    password: boolean;
+  }>({
+    email: false,
+    password: false,
+  });
 
   const callbackUrl = searchParams.get('callbackUrl') || '/admin';
 
@@ -38,18 +46,15 @@ function LoginForm() {
     const errors: { email?: string; password?: string } = {};
 
     // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email) {
-      errors.email = 'Email is required';
-    } else if (!emailRegex.test(email)) {
-      errors.email = 'Please enter a valid email address';
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      errors.email = emailValidation.message;
     }
 
     // Password validation
-    if (!password) {
-      errors.password = 'Password is required';
-    } else if (password.length < 3) {
-      errors.password = 'Password must be at least 3 characters';
+    const passwordValidation = validateRequired(password, 'Password');
+    if (!passwordValidation.isValid) {
+      errors.password = passwordValidation.message;
     }
 
     setValidationErrors(errors);
@@ -117,16 +122,50 @@ function LoginForm() {
 
   const handleEmailChange = (value: string) => {
     setEmail(value);
-    if (validationErrors.email) {
-      setValidationErrors({ ...validationErrors, email: undefined });
+
+    // Real-time validation if field has been touched
+    if (touched.email) {
+      const emailValidation = validateEmail(value);
+      setValidationErrors({
+        ...validationErrors,
+        email: emailValidation.isValid ? undefined : emailValidation.message,
+      });
     }
+  };
+
+  const handleEmailBlur = () => {
+    setTouched({ ...touched, email: true });
+    const emailValidation = validateEmail(email);
+    setValidationErrors({
+      ...validationErrors,
+      email: emailValidation.isValid ? undefined : emailValidation.message,
+    });
   };
 
   const handlePasswordChange = (value: string) => {
     setPassword(value);
-    if (validationErrors.password) {
-      setValidationErrors({ ...validationErrors, password: undefined });
+
+    // Real-time validation if field has been touched
+    if (touched.password) {
+      const passwordValidation = validateRequired(value, 'Password');
+      setValidationErrors({
+        ...validationErrors,
+        password: passwordValidation.isValid
+          ? undefined
+          : passwordValidation.message,
+      });
     }
+  };
+
+  const handlePasswordBlur = () => {
+    setTouched({ ...touched, password: true });
+    const passwordValidation = validateRequired(password, 'Password');
+    setValidationErrors({
+      ...validationErrors,
+      password: passwordValidation.isValid
+        ? undefined
+        : passwordValidation.message,
+    });
   };
 
   const copyErrorToClipboard = () => {
@@ -149,7 +188,7 @@ function LoginForm() {
             Enter your credentials to access the admin portal
           </CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <CardContent className='space-y-4'>
             {error && (
               <div className='bg-destructive/15 slide-in-from-top-2 p-3 border border-destructive/30 rounded-md text-destructive text-sm animate-in duration-300'>
@@ -197,14 +236,39 @@ function LoginForm() {
                 placeholder='admin@mrbuild.co.za'
                 value={email}
                 onChange={(e) => handleEmailChange(e.target.value)}
-                required
+                onBlur={handleEmailBlur}
                 disabled={isLoading}
-                className={validationErrors.email ? 'border-red-500' : ''}
+                className={
+                  validationErrors.email && touched.email
+                    ? 'border-red-500 focus-visible:ring-red-500'
+                    : ''
+                }
                 autoComplete='email'
                 autoFocus
+                aria-invalid={!!validationErrors.email && touched.email}
+                aria-describedby={
+                  validationErrors.email && touched.email
+                    ? 'email-error'
+                    : undefined
+                }
               />
-              {validationErrors.email && (
-                <p className='slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'>
+              {validationErrors.email && touched.email && (
+                <p
+                  id='email-error'
+                  className='flex items-center gap-1.5 slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'
+                  role='alert'
+                >
+                  <svg
+                    className='flex-shrink-0 w-3.5 h-3.5'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
                   {validationErrors.email}
                 </p>
               )}
@@ -220,12 +284,20 @@ function LoginForm() {
                   placeholder='••••••••'
                   value={password}
                   onChange={(e) => handlePasswordChange(e.target.value)}
-                  required
+                  onBlur={handlePasswordBlur}
                   disabled={isLoading}
                   className={
-                    validationErrors.password ? 'border-red-500 pr-10' : 'pr-10'
+                    validationErrors.password && touched.password
+                      ? 'border-red-500 focus-visible:ring-red-500 pr-10'
+                      : 'pr-10'
                   }
                   autoComplete='current-password'
+                  aria-invalid={!!validationErrors.password && touched.password}
+                  aria-describedby={
+                    validationErrors.password && touched.password
+                      ? 'password-error'
+                      : undefined
+                  }
                 />
                 <button
                   type='button'
@@ -270,8 +342,23 @@ function LoginForm() {
                   )}
                 </button>
               </div>
-              {validationErrors.password && (
-                <p className='slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'>
+              {validationErrors.password && touched.password && (
+                <p
+                  id='password-error'
+                  className='flex items-center gap-1.5 slide-in-from-top-1 text-red-500 text-xs animate-in duration-200'
+                  role='alert'
+                >
+                  <svg
+                    className='flex-shrink-0 w-3.5 h-3.5'
+                    fill='currentColor'
+                    viewBox='0 0 20 20'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
                   {validationErrors.password}
                 </p>
               )}
