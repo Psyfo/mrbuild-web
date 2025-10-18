@@ -3,7 +3,7 @@ import '@/styles/globals.css';
 
 import type { Metadata } from 'next';
 import AuthProvider from '@/components/providers/AuthProvider';
-import { Toaster } from '@/components/ui/toaster';
+import { Toaster } from '@/components/ui/sonner';
 
 export const metadata: Metadata = {
   title: 'Mr Build',
