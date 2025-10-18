@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useToast } from '@/hooks/use-toast';
 import {
   Card,
   CardContent,
@@ -18,7 +18,6 @@ import {
 
 export default function AdminSetupPage() {
   const router = useRouter();
-  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -86,15 +85,20 @@ export default function AdminSetupPage() {
     setSuccess('');
 
     if (!validateForm()) {
-      toast({
-        variant: 'destructive',
-        title: 'Validation Error',
+      toast.error('Validation Error', {
         description: 'Please fix the errors in the form before submitting.',
+        duration: 4000,
       });
       return;
     }
 
     setIsLoading(true);
+
+    // Show info toast when creating admin
+    toast.info('Creating admin account...', {
+      description: 'Setting up your account',
+      duration: 2000,
+    });
 
     try {
       const response = await fetch('/api/admin/setup', {
@@ -118,9 +122,9 @@ export default function AdminSetupPage() {
 
       const successMsg = 'Admin account created successfully!';
       setSuccess(successMsg);
-      toast({
-        title: 'Success!',
+      toast.success('Success!', {
         description: successMsg,
+        duration: 3000,
       });
       setFormData({
         name: '',
@@ -131,6 +135,14 @@ export default function AdminSetupPage() {
       });
       setValidationErrors({});
 
+      // Show warning before redirect
+      setTimeout(() => {
+        toast.warning('Redirecting...', {
+          description: 'Taking you to the login page',
+          duration: 1500,
+        });
+      }, 1500);
+
       // Redirect to login after 2 seconds
       setTimeout(() => {
         router.push('/login');
@@ -139,10 +151,9 @@ export default function AdminSetupPage() {
       const errorMsg =
         error instanceof Error ? error.message : 'An error occurred';
       setError(errorMsg);
-      toast({
-        variant: 'destructive',
-        title: 'Setup Failed',
+      toast.error('Setup Failed', {
         description: errorMsg,
+        duration: 5000,
       });
     } finally {
       setIsLoading(false);
@@ -160,8 +171,7 @@ export default function AdminSetupPage() {
   const copyErrorToClipboard = () => {
     if (error) {
       navigator.clipboard.writeText(error);
-      toast({
-        title: 'Copied!',
+      toast.success('Copied!', {
         description: 'Error message copied to clipboard.',
       });
     }
