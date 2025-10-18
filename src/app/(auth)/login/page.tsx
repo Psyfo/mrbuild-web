@@ -286,7 +286,7 @@ function LoginForm() {
               />
               <Label
                 htmlFor='remember'
-                className='text-sm font-normal cursor-pointer'
+                className='font-normal text-sm cursor-pointer'
               >
                 Remember me for 90 days
               </Label>
