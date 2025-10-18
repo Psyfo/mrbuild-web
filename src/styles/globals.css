@@ -24,8 +24,7 @@
 /* DINOT font-face definitions */
 @font-face {
     font-family: 'DINOT';
-    src: url('/fonts/DINOT-Regular.woff2') format('woff2'),
-        url('/fonts/DINOT-Regular.woff') format('woff');
+    src: url('/fonts/DINOT-Regular.woff') format('woff');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -33,8 +32,7 @@
 
 @font-face {
     font-family: 'DINOT';
-    src: url('/fonts/DINOT-Bold.woff2') format('woff2'),
-        url('/fonts/DINOT-Bold.woff') format('woff');
+    src: url('/fonts/DINOT-Bold.woff') format('woff');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -107,7 +105,7 @@ body {
 
 
 @layer base {
-  :root {
+    :root {
         --background: 0 0% 100%;
         --foreground: 0 0% 3.9%;
         --card: 0 0% 100%;
@@ -134,7 +132,8 @@ body {
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
     }
-  .dark {
+
+    .dark {
         --background: 0 0% 3.9%;
         --foreground: 0 0% 98%;
         --card: 0 0% 3.9%;
@@ -165,10 +164,36 @@ body {
 
 
 @layer base {
-  * {
-    @apply border-border;
+    * {
+        @apply border-border;
     }
-  body {
-    @apply bg-background text-foreground;
+
+    body {
+        @apply bg-background text-foreground;
     }
+}
+
+/* Sonner Toast Description Colors */
+[data-sonner-toast][data-type="success"] [data-description],
+[data-sonner-toast][data-type="success"] .sonner-description {
+    color: rgb(21 128 61) !important;
+    /* green-700 */
+}
+
+[data-sonner-toast][data-type="error"] [data-description],
+[data-sonner-toast][data-type="error"] .sonner-description {
+    color: rgb(185 28 28) !important;
+    /* red-700 */
+}
+
+[data-sonner-toast][data-type="warning"] [data-description],
+[data-sonner-toast][data-type="warning"] .sonner-description {
+    color: rgb(161 98 7) !important;
+    /* yellow-700 */
+}
+
+[data-sonner-toast][data-type="info"] [data-description],
+[data-sonner-toast][data-type="info"] .sonner-description {
+    color: rgb(29 78 216) !important;
+    /* blue-700 */
 }
