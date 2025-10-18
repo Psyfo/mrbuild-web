@@ -14,6 +14,7 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: 'Email', type: 'email' },
         password: { label: 'Password', type: 'password' },
+        rememberMe: { label: 'Remember Me', type: 'text' },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -42,6 +43,7 @@ export const authOptions: NextAuthOptions = {
           id: user._id.toString(),
           email: user.email,
           name: user.name,
+          rememberMe: credentials.rememberMe === 'true',
         };
       },
     }),
@@ -59,6 +61,9 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.email = user.email;
+        // Store rememberMe in token
+        token.rememberMe =
+          (user as { rememberMe?: boolean }).rememberMe || false;
       }
       return token;
     },
@@ -66,6 +71,13 @@ export const authOptions: NextAuthOptions = {
       if (token && session.user) {
         session.user.id = token.id as string;
         session.user.email = token.email as string;
+      }
+      // Dynamically set maxAge based on rememberMe
+      const rememberMe = token.rememberMe as boolean;
+      if (rememberMe) {
+        session.expires = new Date(
+          Date.now() + 90 * 24 * 60 * 60 * 1000
+        ).toISOString(); // 90 days
       }
       return session;
     },
