@@ -4,11 +4,11 @@ import { useState, Suspense } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
-import { useToast } from '@/hooks/use-toast';
 import {
   Card,
   CardContent,
@@ -21,7 +21,6 @@ import {
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { toast } = useToast();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -62,15 +61,20 @@ function LoginForm() {
     setError('');
 
     if (!validateForm()) {
-      toast({
-        variant: 'destructive',
-        title: 'Validation Error',
+      toast.error('Validation Error', {
         description: 'Please fix the errors in the form before submitting.',
+        duration: 4000,
       });
       return;
     }
 
     setIsLoading(true);
+
+    // Show info toast when starting login
+    toast.info('Signing in...', {
+      description: 'Verifying your credentials',
+      duration: 2000,
+    });
 
     try {
       const result = await signIn('credentials', {
@@ -83,15 +87,14 @@ function LoginForm() {
       if (result?.error) {
         const errorMsg = 'Invalid email or password. Please try again.';
         setError(errorMsg);
-        toast({
-          variant: 'destructive',
-          title: 'Login Failed',
+        toast.error('Login Failed', {
           description: errorMsg,
+          duration: 5000,
         });
       } else if (result?.ok) {
-        toast({
-          title: 'Success!',
+        toast.success('Success!', {
           description: 'Logging you in...',
+          duration: 2000,
         });
         // Success animation before redirect
         setTimeout(() => {
@@ -102,10 +105,9 @@ function LoginForm() {
     } catch (error) {
       const errorMsg = 'An error occurred. Please try again.';
       setError(errorMsg);
-      toast({
-        variant: 'destructive',
-        title: 'Error',
+      toast.error('Error', {
         description: errorMsg,
+        duration: 5000,
       });
       console.error('Login error:', error);
     } finally {
@@ -130,8 +132,7 @@ function LoginForm() {
   const copyErrorToClipboard = () => {
     if (error) {
       navigator.clipboard.writeText(error);
-      toast({
-        title: 'Copied!',
+      toast.success('Copied!', {
         description: 'Error message copied to clipboard.',
       });
     }
