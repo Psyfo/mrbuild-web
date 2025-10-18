@@ -20,6 +20,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Badge } from '@/components/ui/badge';
+import { AdminFooter } from '@/components/admin/AdminFooter';
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -53,7 +54,7 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className='bg-gray-50 min-h-screen'>
+    <div className='flex flex-col bg-gray-50 min-h-screen'>
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
         <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
@@ -106,7 +107,7 @@ export default function AdminDashboard() {
       </header>
 
       {/* Main Content */}
-      <main className='mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
+      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
         <div className='mb-8'>
           <h2 className='mb-2 font-bold text-gray-900 text-3xl'>
             Welcome back, {session?.user?.name?.split(' ')[0]}!
@@ -180,7 +181,10 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Contact Messages Card */}
-          <Card className='hover:shadow-lg transition-shadow cursor-pointer'>
+          <Card
+            className='hover:shadow-lg transition-shadow cursor-pointer'
+            onClick={() => (window.location.href = '/admin/contacts')}
+          >
             <CardHeader>
               <div className='flex justify-center items-center bg-green-100 mb-4 rounded-lg w-12 h-12'>
                 <svg
@@ -203,7 +207,14 @@ export default function AdminDashboard() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button variant='outline' className='w-full'>
+              <Button
+                variant='outline'
+                className='w-full'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.location.href = '/admin/contacts';
+                }}
+              >
                 View Messages
               </Button>
             </CardContent>
@@ -334,6 +345,7 @@ export default function AdminDashboard() {
           </Card>
         </div>
       </main>
+      <AdminFooter />
     </div>
   );
 }
