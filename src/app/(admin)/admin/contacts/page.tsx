@@ -259,15 +259,15 @@ export default function ContactManagementPage() {
   const getStatusVariant = (status: ContactStatus) => {
     switch (status) {
       case ContactStatus.NEW:
-        return 'default';
+        return 'info'; // Blue for new
       case ContactStatus.READ:
-        return 'secondary';
+        return 'warning'; // Amber for read
       case ContactStatus.REPLIED:
-        return 'outline';
+        return 'success'; // Green for replied
       case ContactStatus.ARCHIVED:
-        return 'secondary';
+        return 'muted'; // Gray for archived
       case ContactStatus.SPAM:
-        return 'destructive';
+        return 'destructive'; // Red for spam
       default:
         return 'default';
     }

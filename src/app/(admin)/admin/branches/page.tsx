@@ -227,14 +227,21 @@ export default function BranchManagementPage() {
   // Get status badge variant
   const getStatusVariant = (
     status: BranchStatus
-  ): 'default' | 'secondary' | 'destructive' | 'outline' => {
+  ):
+    | 'default'
+    | 'secondary'
+    | 'destructive'
+    | 'outline'
+    | 'success'
+    | 'warning'
+    | 'muted' => {
     switch (status) {
       case BranchStatus.ACTIVE:
-        return 'default';
+        return 'success'; // Green for active
       case BranchStatus.INACTIVE:
-        return 'secondary';
+        return 'muted'; // Gray for inactive
       case BranchStatus.COMING_SOON:
-        return 'outline';
+        return 'warning'; // Amber for coming soon
       default:
         return 'default';
     }
@@ -489,9 +496,9 @@ export default function BranchManagementPage() {
                           </TableCell>
                           <TableCell>
                             {branch.isActive ? (
-                              <Badge variant='default'>✓</Badge>
+                              <Badge variant='success'>✓ Active</Badge>
                             ) : (
-                              <Badge variant='secondary'>✗</Badge>
+                              <Badge variant='muted'>✗ Inactive</Badge>
                             )}
                           </TableCell>
                           <TableCell

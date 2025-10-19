@@ -5,6 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { INavigation } from '@/types/navigation';
 import { toast } from 'sonner';
 
@@ -78,106 +85,147 @@ export default function NavigationForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className='space-y-6 max-w-2xl'>
-      <div>
-        <Label htmlFor='label'>Label *</Label>
-        <Input
-          id='label'
-          value={formData.label}
-          onChange={(e) => setFormData({ ...formData, label: e.target.value })}
-          placeholder='e.g., About, Services, Contact'
-          required
-        />
-        <p className='mt-1 text-gray-500 text-sm'>
-          The text displayed in the navigation
-        </p>
-      </div>
+    <form onSubmit={handleSubmit} className='space-y-6'>
+      {/* Basic Information */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Navigation Item Details</CardTitle>
+          <CardDescription>
+            Configure the navigation item label, link, and display properties
+          </CardDescription>
+        </CardHeader>
+        <CardContent className='space-y-4'>
+          <div className='gap-4 grid grid-cols-1 md:grid-cols-2'>
+            <div className='space-y-2'>
+              <Label htmlFor='label'>
+                Label <span className='text-red-500'>*</span>
+              </Label>
+              <Input
+                id='label'
+                value={formData.label}
+                onChange={(e) =>
+                  setFormData({ ...formData, label: e.target.value })
+                }
+                placeholder='e.g., About, Services, Contact'
+                required
+              />
+              <p className='text-muted-foreground text-xs'>
+                The text displayed in the navigation menu
+              </p>
+            </div>
 
-      <div>
-        <Label htmlFor='href'>Link *</Label>
-        <Input
-          id='href'
-          value={formData.href}
-          onChange={(e) => setFormData({ ...formData, href: e.target.value })}
-          placeholder='e.g., #about, /about, https://example.com'
-          required
-        />
-        <p className='mt-1 text-gray-500 text-sm'>
-          Use #section-id for anchor links, /path for internal pages, or full
-          URL for external sites
-        </p>
-      </div>
+            <div className='space-y-2'>
+              <Label htmlFor='order'>
+                Display Order <span className='text-red-500'>*</span>
+              </Label>
+              <Input
+                id='order'
+                type='number'
+                value={formData.order}
+                onChange={(e) =>
+                  setFormData({ ...formData, order: parseInt(e.target.value) })
+                }
+                min='1'
+                required
+              />
+              <p className='text-muted-foreground text-xs'>
+                Lower numbers appear first (1, 2, 3...)
+              </p>
+            </div>
+          </div>
 
-      <div>
-        <Label htmlFor='order'>Display Order *</Label>
-        <Input
-          id='order'
-          type='number'
-          value={formData.order}
-          onChange={(e) =>
-            setFormData({ ...formData, order: parseInt(e.target.value) })
-          }
-          min='1'
-          required
-        />
-        <p className='mt-1 text-gray-500 text-sm'>
-          Lower numbers appear first (1, 2, 3...)
-        </p>
-      </div>
+          <div className='space-y-2'>
+            <Label htmlFor='href'>
+              Link <span className='text-red-500'>*</span>
+            </Label>
+            <Input
+              id='href'
+              value={formData.href}
+              onChange={(e) =>
+                setFormData({ ...formData, href: e.target.value })
+              }
+              placeholder='e.g., #about, /about, https://example.com'
+              required
+            />
+            <p className='text-muted-foreground text-xs'>
+              Use #section-id for anchor links, /path for internal pages, or
+              full URL for external sites
+            </p>
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className='space-y-4'>
-        <div className='flex items-center space-x-2'>
-          <Checkbox
-            id='isActive'
-            checked={formData.isActive}
-            onCheckedChange={(checked) =>
-              setFormData({ ...formData, isActive: checked as boolean })
-            }
-          />
-          <Label htmlFor='isActive' className='cursor-pointer'>
-            Active (show in navigation)
-          </Label>
-        </div>
+      {/* Settings */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Settings</CardTitle>
+          <CardDescription>
+            Configure visibility and link behavior
+          </CardDescription>
+        </CardHeader>
+        <CardContent className='space-y-4'>
+          <div className='flex items-center space-x-2'>
+            <Checkbox
+              id='isActive'
+              checked={formData.isActive}
+              onCheckedChange={(checked) =>
+                setFormData({ ...formData, isActive: checked as boolean })
+              }
+            />
+            <Label htmlFor='isActive' className='font-normal cursor-pointer'>
+              <span className='font-medium'>Active</span> - Show this item in
+              the navigation
+            </Label>
+          </div>
 
-        <div className='flex items-center space-x-2'>
-          <Checkbox
-            id='isExternal'
-            checked={formData.isExternal}
-            onCheckedChange={(checked) =>
-              setFormData({ ...formData, isExternal: checked as boolean })
-            }
-          />
-          <Label htmlFor='isExternal' className='cursor-pointer'>
-            External link (points to another website)
-          </Label>
-        </div>
+          <div className='flex items-center space-x-2'>
+            <Checkbox
+              id='isExternal'
+              checked={formData.isExternal}
+              onCheckedChange={(checked) =>
+                setFormData({ ...formData, isExternal: checked as boolean })
+              }
+            />
+            <Label htmlFor='isExternal' className='font-normal cursor-pointer'>
+              <span className='font-medium'>External link</span> - Points to
+              another website
+            </Label>
+          </div>
 
-        <div className='flex items-center space-x-2'>
-          <Checkbox
-            id='openInNewTab'
-            checked={formData.openInNewTab}
-            onCheckedChange={(checked) =>
-              setFormData({ ...formData, openInNewTab: checked as boolean })
-            }
-          />
-          <Label htmlFor='openInNewTab' className='cursor-pointer'>
-            Open in new tab
-          </Label>
-        </div>
-      </div>
+          <div className='flex items-center space-x-2'>
+            <Checkbox
+              id='openInNewTab'
+              checked={formData.openInNewTab}
+              onCheckedChange={(checked) =>
+                setFormData({ ...formData, openInNewTab: checked as boolean })
+              }
+            />
+            <Label
+              htmlFor='openInNewTab'
+              className='font-normal cursor-pointer'
+            >
+              <span className='font-medium'>Open in new tab</span> - Opens link
+              in a new browser tab
+            </Label>
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className='flex gap-4'>
-        <Button type='submit' disabled={loading}>
-          {loading
-            ? 'Saving...'
-            : isEdit
-            ? 'Update Navigation'
-            : 'Create Navigation'}
-        </Button>
-        <Button type='button' variant='outline' onClick={() => router.back()}>
-          Cancel
-        </Button>
-      </div>
+      {/* Actions */}
+      <Card>
+        <CardContent className='flex gap-4 pt-6'>
+          <Button type='submit' disabled={loading}>
+            {loading
+              ? 'Saving...'
+              : isEdit
+              ? 'Update Navigation'
+              : 'Create Navigation'}
+          </Button>
+          <Button type='button' variant='outline' onClick={() => router.back()}>
+            Cancel
+          </Button>
+        </CardContent>
+      </Card>
     </form>
   );
 }

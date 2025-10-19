@@ -35,6 +35,8 @@ export default function NavigationManagementPage() {
   const router = useRouter();
   const [navigation, setNavigation] = useState<INavigation[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedNavigation, setSelectedNavigation] =
+    useState<INavigation | null>(null);
   const [stats, setStats] = useState({
     total: 0,
     active: 0,
@@ -289,7 +291,11 @@ export default function NavigationManagementPage() {
                 </TableHeader>
                 <TableBody>
                   {navigation.map((item, index) => (
-                    <TableRow key={item._id}>
+                    <TableRow
+                      key={item._id}
+                      className='hover:bg-gray-50 transition-colors cursor-pointer'
+                      onClick={() => setSelectedNavigation(item)}
+                    >
                       <TableCell>
                         <div className='flex items-center gap-2'>
                           <span className='font-mono'>{item.order}</span>
@@ -297,7 +303,10 @@ export default function NavigationManagementPage() {
                             <Button
                               variant='ghost'
                               size='sm'
-                              onClick={() => handleReorder(item._id!, 'up')}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleReorder(item._id!, 'up');
+                              }}
                               disabled={index === 0}
                               className='p-0 w-5 h-5'
                             >
@@ -306,7 +315,10 @@ export default function NavigationManagementPage() {
                             <Button
                               variant='ghost'
                               size='sm'
-                              onClick={() => handleReorder(item._id!, 'down')}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleReorder(item._id!, 'down');
+                              }}
                               disabled={index === navigation.length - 1}
                               className='p-0 w-5 h-5'
                             >
@@ -341,7 +353,11 @@ export default function NavigationManagementPage() {
                       <TableCell>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <Button variant='ghost' className='p-0 w-8 h-8'>
+                            <Button
+                              variant='ghost'
+                              className='p-0 w-8 h-8'
+                              onClick={(e) => e.stopPropagation()}
+                            >
                               <span className='sr-only'>Open menu</span>
                               <MoreHorizontal className='w-4 h-4' />
                             </Button>
@@ -349,24 +365,29 @@ export default function NavigationManagementPage() {
                           <DropdownMenuContent align='end'>
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuItem
-                              onClick={() =>
+                              onClick={(e) => {
+                                e.stopPropagation();
                                 router.push(
                                   `/admin/navigation/edit/${item._id}`
-                                )
-                              }
+                                );
+                              }}
                             >
                               Edit
                             </DropdownMenuItem>
                             <DropdownMenuItem
-                              onClick={() =>
-                                handleToggleActive(item._id!, item.isActive)
-                              }
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleToggleActive(item._id!, item.isActive);
+                              }}
                             >
                               {item.isActive ? 'Deactivate' : 'Activate'}
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
-                              onClick={() => handleDelete(item._id!)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDelete(item._id!);
+                              }}
                               className='text-red-600'
                             >
                               Delete
@@ -385,6 +406,134 @@ export default function NavigationManagementPage() {
 
       {/* Footer */}
       <AdminFooter />
+
+      {/* Navigation Detail Modal */}
+      {selectedNavigation && (
+        <div
+          className='z-50 fixed inset-0 flex justify-center items-center bg-black/60 backdrop-blur-sm p-4'
+          onClick={() => setSelectedNavigation(null)}
+        >
+          <Card
+            className='w-full max-w-3xl max-h-[90vh] overflow-y-auto'
+            onClick={(e) => e.stopPropagation()}
+          >
+            <CardHeader className='flex flex-row justify-between items-start'>
+              <div>
+                <CardTitle className='text-2xl'>
+                  Navigation Item Details
+                </CardTitle>
+                <CardDescription>
+                  View complete information for this navigation item
+                </CardDescription>
+              </div>
+              <Button
+                variant='ghost'
+                onClick={() => setSelectedNavigation(null)}
+                className='text-gray-500 hover:text-gray-700'
+              >
+                ✕
+              </Button>
+            </CardHeader>
+            <CardContent className='space-y-6'>
+              {/* Basic Information */}
+              <div>
+                <h3 className='mb-4 font-semibold text-lg'>
+                  Basic Information
+                </h3>
+                <div className='gap-4 grid grid-cols-2'>
+                  <div>
+                    <p className='text-gray-500 text-sm'>Label</p>
+                    <p className='font-medium'>{selectedNavigation.label}</p>
+                  </div>
+                  <div>
+                    <p className='text-gray-500 text-sm'>Display Order</p>
+                    <p className='font-mono font-medium'>
+                      {selectedNavigation.order}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Link Details */}
+              <div>
+                <h3 className='mb-4 font-semibold text-lg'>Link Details</h3>
+                <div className='space-y-3'>
+                  <div>
+                    <p className='text-gray-500 text-sm'>Destination</p>
+                    <code className='inline-block bg-gray-100 mt-1 px-3 py-2 rounded text-sm'>
+                      {selectedNavigation.href}
+                    </code>
+                  </div>
+                  <div className='flex gap-2'>
+                    <Badge
+                      variant={
+                        selectedNavigation.isExternal ? 'default' : 'outline'
+                      }
+                    >
+                      {selectedNavigation.isExternal
+                        ? 'External Link'
+                        : 'Internal Link'}
+                    </Badge>
+                    {selectedNavigation.openInNewTab && (
+                      <Badge variant='outline'>Opens in New Tab</Badge>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Status */}
+              <div>
+                <h3 className='mb-4 font-semibold text-lg'>Status</h3>
+                <div className='flex items-center gap-2'>
+                  <Badge
+                    variant={selectedNavigation.isActive ? 'success' : 'muted'}
+                    className='px-3 py-1 text-base'
+                  >
+                    {selectedNavigation.isActive ? '✓ Active' : '○ Inactive'}
+                  </Badge>
+                  <span className='text-gray-600 text-sm'>
+                    {selectedNavigation.isActive
+                      ? 'Visible in website navigation'
+                      : 'Hidden from website navigation'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Actions */}
+              <div className='flex gap-3 pt-4 border-t'>
+                <Button
+                  onClick={() => {
+                    setSelectedNavigation(null);
+                    router.push(
+                      `/admin/navigation/edit/${selectedNavigation._id}`
+                    );
+                  }}
+                >
+                  Edit Navigation Item
+                </Button>
+                <Button
+                  variant='outline'
+                  onClick={() => {
+                    handleToggleActive(
+                      selectedNavigation._id!,
+                      selectedNavigation.isActive
+                    );
+                    setSelectedNavigation(null);
+                  }}
+                >
+                  {selectedNavigation.isActive ? 'Deactivate' : 'Activate'}
+                </Button>
+                <Button
+                  variant='outline'
+                  onClick={() => setSelectedNavigation(null)}
+                >
+                  Close
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

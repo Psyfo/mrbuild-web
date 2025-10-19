@@ -808,13 +808,13 @@ export default function SpecialsManagementPage() {
                 </div>
               </CardHeader>
               <CardContent className='space-y-4'>
-                <div>
+                <div className='flex justify-center'>
                   <Image
                     src={selectedSpecial.image.secureUrl}
                     alt={selectedSpecial.title}
                     width={selectedSpecial.image.width}
                     height={selectedSpecial.image.height}
-                    className='rounded-lg w-full'
+                    className='rounded-lg w-auto max-w-md max-h-96 object-contain'
                   />
                 </div>
 
@@ -828,11 +828,9 @@ export default function SpecialsManagementPage() {
                   <div>
                     <h3 className='mb-1 font-semibold text-sm'>Visibility</h3>
                     <Badge
-                      variant={
-                        selectedSpecial.isActive ? 'default' : 'secondary'
-                      }
+                      variant={selectedSpecial.isActive ? 'success' : 'muted'}
                     >
-                      {selectedSpecial.isActive ? 'Visible' : 'Hidden'}
+                      {selectedSpecial.isActive ? '✓ Visible' : '○ Hidden'}
                     </Badge>
                   </div>
                 </div>

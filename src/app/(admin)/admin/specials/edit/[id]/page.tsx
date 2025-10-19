@@ -47,26 +47,30 @@ export default async function EditSpecialPage({
   }
 
   return (
-    <div className='space-y-6 p-8'>
+    <div className='flex flex-col bg-gray-50 min-h-screen'>
       {/* Header */}
-      <div className='flex justify-between items-center'>
-        <div className='flex items-center gap-4'>
-          <Link href='/admin/specials'>
-            <Button variant='ghost' size='icon'>
-              <ChevronLeft className='w-5 h-5' />
-            </Button>
-          </Link>
-          <div>
-            <h1 className='font-bold text-3xl'>Edit Special</h1>
-            <p className='mt-1 text-gray-600'>
-              Update promotional brochure details
-            </p>
+      <header className='bg-white border-gray-200 border-b'>
+        <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
+          <div className='flex justify-between items-center h-16'>
+            <div className='flex items-center gap-4'>
+              <Link href='/admin/specials'>
+                <Button
+                  variant='ghost'
+                  className='text-gray-600 hover:text-gray-900'
+                >
+                  ← Back to Specials
+                </Button>
+              </Link>
+              <h1 className='font-bold text-gray-900 text-2xl'>Edit Special</h1>
+            </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Form */}
-      <SpecialForm special={special} isEdit />
+      {/* Main Content */}
+      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full max-w-7xl'>
+        <SpecialForm special={special} isEdit />
+      </main>
     </div>
   );
 }
