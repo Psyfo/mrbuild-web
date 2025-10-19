@@ -1,7 +1,9 @@
+'use client';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
+import { IBranch } from '@/types/branch';
 
 // Dynamically import the LeafletMap component with SSR disabled
 const LeafletMap = dynamic(() => import('./LeafletMap/LeafletMap'), {
@@ -9,101 +11,64 @@ const LeafletMap = dynamic(() => import('./LeafletMap/LeafletMap'), {
 });
 
 const BranchMap: React.FC = () => {
-  // Branch data
-  const branches = [
-    {
-      branchName: 'Mr. Build Tzaneen',
-      address1: 'Corner Danie Joubert',
-      address2: 'Claude Wheatley St, Tzaneen, 0850',
-      telephone: '015 004 0560',
-      email: 'tzaneen@mrbuild.co.za',
-      lat: -23.831000495266885,
-      long: 30.164830483251983,
-    },
-    {
-      branchName: 'Mr. Build Louis Trichardt',
-      address1: 'Cnr Rissik & Grobler Straat',
-      address2: 'Louis Trichardt, 0920',
-      telephone: '015 004 0168',
-      email: 'Louistrichardt@mrbuild.co.za',
-      lat: -23.049124228049475,
-      long: 29.910482873433757,
-    },
-    {
-      branchName: 'Mr. Build Musina',
-      address1: '6 Pat Harrison Rd',
-      address2: 'Musina, 0900',
-      telephone: '015 004 1031',
-      email: 'musina@mrbuild.co.za',
-      lat: -22.35601137585995,
-      long: 30.03158562369095,
-    },
-    {
-      branchName: 'Mr. Build Giyani',
-      address1: 'Giyani-BA',
-      address2: 'Giyani, 0826',
-      telephone: '015 812 3786',
-      email: 'giyani@mrbuild.co.za',
-      lat: -23.30823395934613,
-      long: 30.693532532078933,
-    },
-    {
-      branchName: 'Mr. Build Sibasa',
-      address1: '204 Makhado Rd Sibasa',
-      address2: 'Sibasa, 0970',
-      telephone: '015 963 3856',
-      email: 'sibasa@mrbuild.co.za',
-      lat: -22.947322465454207,
-      long: 30.468803054391653,
-    },
-    {
-      branchName: 'Mr. Build Thohoyandou',
-      address1: '90/91 B.A MUNICIPALITY',
-      address2: 'Thohoyandou, 0950',
-      telephone: '015 962 0444',
-      email: 'thohoyandou@mrbuild.co.za',
-      lat: -22.97051832689911,
-      long: 30.461899383227742,
-    },
-    {
-      branchName: 'The Builder Thohoyandou',
-      address1: '70 Mphepu Street,',
-      address2: 'Main Road, 0950 Thohoyandou',
-      telephone: '015 962 5545',
-      email: 'thohoyandou@thebuilder.co.za',
-      lat: -22.98298122138363,
-      long: 30.456993058732582,
-    },
-    {
-      branchName: 'The Builder Giyani',
-      address1: '22BA, Next to Mopani Depot',
-      address2: 'Giyani, 0826',
-      telephone: '015 004 0561',
-      email: 'giyani@thebuilder.co.za',
-      lat: -23.30520029500934,
-      long: 30.68955769152215,
-    },
-  ];
-
+  const [branches, setBranches] = useState<IBranch[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedBranch, setSelectedBranch] = useState<unknown | null>(null);
-  const [isExpanded, setIsExpanded] = useState(false); // Manage the height of the container
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Fetch branches from API
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const response = await fetch('/api/branches');
+        if (!response.ok) throw new Error('Failed to fetch branches');
+        const data = await response.json();
+        setBranches(data);
+      } catch (error) {
+        console.error('Error fetching branches:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBranches();
+  }, []);
 
   // Handle expanding/collapsing the branches tab
   const handleExpand = () => {
     setIsExpanded(!isExpanded);
   };
 
-  // Handle "Get Directions" click, which will return the container to its original state
+  // Handle "Get Directions" click
   const handleGetDirections = (lat: number, long: number) => {
     setSelectedBranch({ lat, long });
-    setIsExpanded(false); // Collapse the container after clicking "Get Directions"
+    setIsExpanded(false);
   };
+
+  // Map branches to format expected by LeafletMap
+  const mappedBranches = branches.map((branch) => ({
+    branchName: branch.branchName,
+    address1: branch.address1,
+    address2: branch.address2 || `${branch.city}, ${branch.postalCode}`,
+    telephone: branch.telephone,
+    email: branch.email,
+    lat: branch.coordinates.latitude,
+    long: branch.coordinates.longitude,
+  }));
+
+  if (loading) {
+    return (
+      <div className='flex justify-center items-center bg-white w-full h-[80vh]'>
+        <p className='text-gray-600'>Loading branches...</p>
+      </div>
+    );
+  }
 
   return (
     <div className='relative w-full h-[80vh]'>
       {/* Map Component */}
-      <div className='absolute z-0 top-0 left-0 bg-white w-full h-[65%] lg:h-full'>
-        <LeafletMap branches={branches} selectedBranch={selectedBranch} />
+      <div className='top-0 left-0 z-0 absolute bg-white w-full h-[65%] lg:h-full'>
+        <LeafletMap branches={mappedBranches} selectedBranch={selectedBranch} />
       </div>
 
       {/* Scrolling Branch List */}
@@ -131,14 +96,14 @@ const BranchMap: React.FC = () => {
         {/* Tab marker for expanding on mobile (purely decorative now) */}
         <div
           id='tab-marker'
-          className='border-[2px] border-white bg-white w-16 h-auto mb-4 divider divide-white lg:hidden'
+          className='lg:hidden bg-white mb-4 border-[2px] border-white divide-white w-16 h-auto divider'
         ></div>
 
         {/* Scrolling list */}
-        <div className='flex flex-col items-center overflow-y-scroll scrollable scrollbar-custom pr-[2rem] lg:pr-[5rem]'>
+        <div className='flex flex-col items-center pr-[2rem] lg:pr-[5rem] overflow-y-scroll scrollable scrollbar-custom'>
           {branches.map((branch, index) => (
             <div
-              className='flex w-full mt-8 items-start gap-[25px]'
+              className='flex items-start gap-[25px] mt-8 w-full'
               key={index}
             >
               <Image
@@ -149,16 +114,21 @@ const BranchMap: React.FC = () => {
                 className='w-[52px]'
               />
               <div className='font-dinot'>
-                <h2 className=' text-[24px] lg:text-[28px] leading-[40px]'>
+                <h2 className='text-[24px] lg:text-[28px] leading-[40px]'>
                   {branch.branchName}
                 </h2>
                 <p>{branch.address1}</p>
                 <p>{branch.address2}</p>
                 <p>{branch.telephone}</p>
                 <p>{branch.email}</p>
-                <p className='mt-4 opacity-60 uppercase underline'>
+                <p className='opacity-60 mt-4 underline uppercase'>
                   <a
-                    onClick={() => handleGetDirections(branch.lat, branch.long)}
+                    onClick={() =>
+                      handleGetDirections(
+                        branch.coordinates.latitude,
+                        branch.coordinates.longitude
+                      )
+                    }
                   >
                     Get Directions
                   </a>

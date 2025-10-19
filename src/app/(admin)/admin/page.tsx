@@ -250,7 +250,14 @@ export default function AdminDashboard() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button variant='outline' className='w-full'>
+              <Button
+                variant='outline'
+                className='w-full'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.location.href = '/admin/branches';
+                }}
+              >
                 Manage Branches
               </Button>
             </CardContent>
