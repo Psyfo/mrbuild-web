@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 
 import SectionHeading from '@/components/SectionHeading/SectionHeading';
+import { ISpecial } from '@/types/special';
 
 import SpecialsSlider from './SpecialsSlider/SpecialsSlider';
 
@@ -11,17 +12,41 @@ import SpecialsSlider from './SpecialsSlider/SpecialsSlider';
 
 const SpecialsSection: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [specials, setSpecials] = useState<ISpecial[]>([]);
+  const [hasActiveSpecials, setHasActiveSpecials] = useState(false);
+  const [loading, setLoading] = useState(true);
   const sectionRef = useRef<HTMLDivElement>(null);
 
+  // Fetch specials from API
+  useEffect(() => {
+    const fetchSpecials = async () => {
+      try {
+        const response = await fetch('/api/specials');
+        if (response.ok) {
+          const data = await response.json();
+          setSpecials(data.specials || []);
+          setHasActiveSpecials(data.hasActiveSpecials || false);
+        }
+      } catch (error) {
+        console.error('Error fetching specials:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSpecials();
+  }, []);
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          observer.disconnect(); // Stop observing once the section is visible
         }
       },
-      { threshold: 0.4 } // Adjust this value as needed
+      {
+        threshold: 0.2, // Trigger when 20% of section is visible
+        rootMargin: '0px 0px -100px 0px', // Start animation slightly before section enters viewport
+      }
     );
 
     if (sectionRef.current) {
@@ -63,6 +88,15 @@ const SpecialsSection: React.FC = () => {
     },
   };
 
+  // Don't render section if loading or no active specials
+  if (loading) {
+    return null; // or a skeleton loader
+  }
+
+  if (!hasActiveSpecials || specials.length === 0) {
+    return null; // Hide section when no active specials
+  }
+
   return (
     <section
       ref={sectionRef}
@@ -90,7 +124,7 @@ const SpecialsSection: React.FC = () => {
         animate={isVisible ? 'visible' : 'hidden'}
         className='relative my-[2rem] px-[2rem] lg:px-[5rem] w-full'
       >
-        <SpecialsSlider />
+        <SpecialsSlider specials={specials} />
         {/* Carousel buttons */}
         <div className='top-[50%] right-[2rem] lg:right-0 lg:absolute flex lg:justify-between gap-[2rem] mt-[2rem] lg:mt-0 lg:px-[1rem] w-auto lg:w-screen translate-y-[-50%] transform'>
           <Image
