@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SpecialForm } from '@/components/admin/SpecialForm';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
@@ -51,18 +52,9 @@ export default async function EditSpecialPage({
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
         <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
-          <div className='flex justify-between items-center h-16'>
-            <div className='flex items-center gap-4'>
-              <Link href='/admin/specials'>
-                <Button
-                  variant='ghost'
-                  className='text-gray-600 hover:text-gray-900'
-                >
-                  ← Back to Specials
-                </Button>
-              </Link>
-              <h1 className='font-bold text-gray-900 text-2xl'>Edit Special</h1>
-            </div>
+          <div className='space-y-2 py-4'>
+            <AdminBreadcrumb />
+            <h1 className='font-bold text-gray-900 text-2xl'>Edit Special</h1>
           </div>
         </div>
       </header>

@@ -2,6 +2,7 @@
 
 import { BranchForm } from '@/components/admin/BranchForm';
 import { AdminFooter } from '@/components/admin/AdminFooter';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 
 export default function NewBranchPage() {
   return (
@@ -9,10 +10,9 @@ export default function NewBranchPage() {
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
         <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
-          <div className='h-16'>
-            <h1 className='flex items-center h-full font-bold text-gray-900 text-2xl'>
-              Add New Branch
-            </h1>
+          <div className='space-y-2 py-4'>
+            <AdminBreadcrumb />
+            <h1 className='font-bold text-gray-900 text-2xl'>Add New Branch</h1>
           </div>
         </div>
       </header>

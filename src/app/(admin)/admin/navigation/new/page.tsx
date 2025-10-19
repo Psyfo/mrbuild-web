@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import NavigationForm from '../components/NavigationForm';
 import { AdminFooter } from '@/components/admin/AdminFooter';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 
 export default function NewNavigationPage() {
   const router = useRouter();
@@ -12,19 +13,11 @@ export default function NewNavigationPage() {
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
         <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
-          <div className='flex justify-between items-center h-16'>
-            <div className='flex items-center gap-4'>
-              <Button
-                variant='ghost'
-                onClick={() => router.push('/admin/navigation')}
-                className='text-gray-600 hover:text-gray-900'
-              >
-                ← Back to Navigation
-              </Button>
-              <h1 className='font-bold text-gray-900 text-2xl'>
-                Add Navigation Item
-              </h1>
-            </div>
+          <div className='space-y-2 py-4'>
+            <AdminBreadcrumb />
+            <h1 className='font-bold text-gray-900 text-2xl'>
+              Add Navigation Item
+            </h1>
           </div>
         </div>
       </header>

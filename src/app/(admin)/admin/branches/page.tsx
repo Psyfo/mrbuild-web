@@ -39,6 +39,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { AdminFooter } from '@/components/admin/AdminFooter';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import {
   Select,
   SelectContent,
@@ -279,22 +280,16 @@ export default function BranchManagementPage() {
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
         <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
-          <div className='flex justify-between items-center h-16'>
-            <div className='flex items-center gap-4'>
-              <Button
-                variant='ghost'
-                onClick={() => router.push('/admin')}
-                className='text-gray-600 hover:text-gray-900'
-              >
-                ← Back to Dashboard
-              </Button>
+          <div className='space-y-2 py-4'>
+            <AdminBreadcrumb />
+            <div className='flex justify-between items-center'>
               <h1 className='font-bold text-gray-900 text-2xl'>
                 Branch Management
               </h1>
+              <Button onClick={() => router.push('/admin/branches/new')}>
+                + Add Branch
+              </Button>
             </div>
-            <Button onClick={() => router.push('/admin/branches/new')}>
-              + Add Branch
-            </Button>
           </div>
         </div>
       </header>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SpecialForm } from '@/components/admin/SpecialForm';
+import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 
 export const metadata: Metadata = {
   title: 'New Special | Mr Build Admin',
@@ -11,26 +12,23 @@ export const metadata: Metadata = {
 
 export default function NewSpecialPage() {
   return (
-    <div className='space-y-6 p-8'>
+    <div className='flex flex-col bg-gray-50 min-h-screen'>
       {/* Header */}
-      <div className='flex justify-between items-center'>
-        <div className='flex items-center gap-4'>
-          <Link href='/admin/specials'>
-            <Button variant='ghost' size='icon'>
-              <ChevronLeft className='w-5 h-5' />
-            </Button>
-          </Link>
-          <div>
-            <h1 className='font-bold text-3xl'>Create New Special</h1>
-            <p className='mt-1 text-gray-600'>
-              Upload a new promotional brochure or special
-            </p>
+      <header className='bg-white border-gray-200 border-b'>
+        <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
+          <div className='space-y-2 py-4'>
+            <AdminBreadcrumb />
+            <h1 className='font-bold text-gray-900 text-2xl'>
+              Create New Special
+            </h1>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Form */}
-      <SpecialForm />
+      {/* Main Content */}
+      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full max-w-7xl'>
+        <SpecialForm />
+      </main>
     </div>
   );
 }
