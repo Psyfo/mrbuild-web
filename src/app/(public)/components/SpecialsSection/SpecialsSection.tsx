@@ -36,17 +36,22 @@ const SpecialsSection: React.FC = () => {
 
     fetchSpecials();
   }, []);
+
+  // Set up IntersectionObserver only after data is loaded and section exists
   useEffect(() => {
+    // Don't set up observer if still loading or no specials
+    if (loading || !hasActiveSpecials || specials.length === 0) {
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
+          observer.disconnect(); // Stop observing once the section is visible
         }
       },
-      {
-        threshold: 0.2, // Trigger when 20% of section is visible
-        rootMargin: '0px 0px -100px 0px', // Start animation slightly before section enters viewport
-      }
+      { threshold: 0.3 } // Adjust this value as needed
     );
 
     if (sectionRef.current) {
@@ -58,7 +63,7 @@ const SpecialsSection: React.FC = () => {
         observer.unobserve(sectionRef.current);
       }
     };
-  }, []);
+  }, [loading, hasActiveSpecials, specials.length]); // Re-run when data changes
 
   // Variants for animations
   const headingVariants = {
