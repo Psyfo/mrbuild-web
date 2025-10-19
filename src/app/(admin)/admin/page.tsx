@@ -300,6 +300,43 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
 
+          {/* Navigation Management Card */}
+          <Card className='hover:shadow-lg transition-shadow cursor-pointer'>
+            <CardHeader>
+              <div className='flex justify-center items-center bg-purple-100 mb-4 rounded-lg w-12 h-12'>
+                <svg
+                  className='w-6 h-6 text-purple-600'
+                  fill='none'
+                  stroke='currentColor'
+                  viewBox='0 0 24 24'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    strokeWidth={2}
+                    d='M4 6h16M4 12h16M4 18h16'
+                  />
+                </svg>
+              </div>
+              <CardTitle>Navigation Management</CardTitle>
+              <CardDescription>
+                Manage website navigation menu items
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Button
+                variant='outline'
+                className='w-full'
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.location.href = '/admin/navigation';
+                }}
+              >
+                Manage Navigation
+              </Button>
+            </CardContent>
+          </Card>
+
           {/* SEO Settings Card */}
           <Card className='hover:shadow-lg transition-shadow cursor-pointer'>
             <CardHeader>

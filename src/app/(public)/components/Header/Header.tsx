@@ -1,13 +1,28 @@
 'use client';
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
-import { useState } from 'react';
-
-const navItems = ['About', 'Services', 'Brands', 'Specials', 'Branch Locator', 'Contact'];
-// removed Specials for now
+import { useState, useEffect } from 'react';
+import { INavigation } from '@/types/navigation';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const [navItems, setNavItems] = useState<INavigation[]>([]);
+
+  useEffect(() => {
+    const fetchNavigation = async () => {
+      try {
+        const response = await fetch('/api/navigation');
+        if (response.ok) {
+          const data = await response.json();
+          setNavItems(data.navigation || []);
+        }
+      } catch (error) {
+        console.error('Error fetching navigation:', error);
+      }
+    };
+
+    fetchNavigation();
+  }, []);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -92,8 +107,10 @@ export default function Header() {
               <nav className='flex flex-col justify-center items-start gap-[1.5rem]'>
                 {navItems.map((item, index) => (
                   <motion.a
-                    key={item}
-                    href={`/#${item.toLowerCase().replace(' ', '-')}`}
+                    key={item._id}
+                    href={item.href}
+                    target={item.openInNewTab ? '_blank' : undefined}
+                    rel={item.openInNewTab ? 'noopener noreferrer' : undefined}
                     onClick={handleOptionClick}
                     className='hover:text-mbYellow'
                     custom={index}
@@ -102,7 +119,7 @@ export default function Header() {
                     animate='visible'
                     exit='exit'
                   >
-                    {item}
+                    {item.label}
                   </motion.a>
                 ))}
               </nav>
@@ -120,11 +137,13 @@ export default function Header() {
       >
         {navItems.map((item) => (
           <a
-            key={item}
-            href={`/#${item.toLowerCase().replace(' ', '-')}`}
+            key={item._id}
+            href={item.href}
+            target={item.openInNewTab ? '_blank' : undefined}
+            rel={item.openInNewTab ? 'noopener noreferrer' : undefined}
             className='hover:text-mbYellow'
           >
-            {item}
+            {item.label}
           </a>
         ))}
       </motion.nav>
