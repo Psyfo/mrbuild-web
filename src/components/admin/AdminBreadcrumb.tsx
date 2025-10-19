@@ -78,7 +78,7 @@ export function AdminBreadcrumb() {
   }
 
   return (
-    <nav className='flex items-center space-x-1 text-gray-600 text-sm'>
+    <nav className='flex items-center space-x-1 mb-6 text-gray-600 text-sm'>
       {breadcrumbs.map((segment, index) => {
         const isLast = index === breadcrumbs.length - 1;
         const isFirst = index === 0;

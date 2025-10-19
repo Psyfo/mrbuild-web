@@ -172,22 +172,20 @@ export default function NavigationManagementPage() {
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
         <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
-          <div className='space-y-2 py-4'>
-            <AdminBreadcrumb />
-            <div className='flex justify-between items-center'>
-              <h1 className='font-bold text-gray-900 text-2xl'>
-                Navigation Management
-              </h1>
-              <Button onClick={() => router.push('/admin/navigation/new')}>
-                + Add Navigation Item
-              </Button>
-            </div>
+          <div className='flex justify-between items-center h-16'>
+            <h1 className='font-bold text-gray-900 text-2xl'>
+              Navigation Management
+            </h1>
+            <Button onClick={() => router.push('/admin/navigation/new')}>
+              + Add Navigation Item
+            </Button>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
+        <AdminBreadcrumb />
         {/* Stats Cards */}
         <div className='gap-4 grid grid-cols-1 md:grid-cols-5 mb-8'>
           <Card>

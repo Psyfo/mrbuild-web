@@ -18,8 +18,7 @@ export default function EditNavigationPageClient({
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
         <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
-          <div className='space-y-2 py-4'>
-            <AdminBreadcrumb />
+          <div className='flex justify-between items-center h-16'>
             <h1 className='font-bold text-gray-900 text-2xl'>
               Edit Navigation Item
             </h1>
@@ -29,6 +28,7 @@ export default function EditNavigationPageClient({
 
       {/* Main Content */}
       <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
+        <AdminBreadcrumb />
         <NavigationForm navigation={navigation} isEdit />
       </main>
 

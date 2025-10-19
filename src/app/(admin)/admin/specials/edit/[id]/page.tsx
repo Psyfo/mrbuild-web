@@ -52,8 +52,7 @@ export default async function EditSpecialPage({
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
         <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
-          <div className='space-y-2 py-4'>
-            <AdminBreadcrumb />
+          <div className='flex justify-between items-center h-16'>
             <h1 className='font-bold text-gray-900 text-2xl'>Edit Special</h1>
           </div>
         </div>
@@ -61,6 +60,7 @@ export default async function EditSpecialPage({
 
       {/* Main Content */}
       <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full max-w-7xl'>
+        <AdminBreadcrumb />
         <SpecialForm special={special} isEdit />
       </main>
     </div>
