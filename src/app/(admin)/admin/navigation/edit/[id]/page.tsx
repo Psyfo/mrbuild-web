@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth';
 import { redirect } from 'next/navigation';
 import { authOptions } from '@/lib/auth';
-import NavigationForm from '../../components/NavigationForm';
+import EditNavigationPageClient from '../EditNavigationPageClient';
 
 export default async function EditNavigationPage({
   params,
@@ -20,17 +20,22 @@ export default async function EditNavigationPage({
 
   if (!navigation) {
     return (
-      <div className='p-8'>
-        <h1 className='mb-6 font-bold text-3xl'>Navigation Not Found</h1>
-        <p>The navigation item you're looking for doesn't exist.</p>
+      <div className='flex flex-col bg-gray-50 min-h-screen'>
+        <header className='bg-white border-gray-200 border-b'>
+          <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
+            <div className='flex justify-between items-center h-16'>
+              <h1 className='font-bold text-gray-900 text-2xl'>
+                Navigation Not Found
+              </h1>
+            </div>
+          </div>
+        </header>
+        <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
+          <p>The navigation item you're looking for doesn't exist.</p>
+        </main>
       </div>
     );
   }
 
-  return (
-    <div className='p-8'>
-      <h1 className='mb-6 font-bold text-3xl'>Edit Navigation Item</h1>
-      <NavigationForm navigation={navigation} isEdit />
-    </div>
-  );
+  return <EditNavigationPageClient navigation={navigation} />;
 }

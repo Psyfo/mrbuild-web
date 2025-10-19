@@ -1,10 +1,15 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import NavigationForm from '../components/NavigationForm';
 import { AdminFooter } from '@/components/admin/AdminFooter';
+import { INavigation } from '@/types/navigation';
+import NavigationForm from '../components/NavigationForm';
 
-export default function NewNavigationPage() {
+export default function EditNavigationPageClient({
+  navigation,
+}: {
+  navigation: INavigation;
+}) {
   const router = useRouter();
 
   return (
@@ -22,7 +27,7 @@ export default function NewNavigationPage() {
                 ← Back to Navigation
               </Button>
               <h1 className='font-bold text-gray-900 text-2xl'>
-                Add Navigation Item
+                Edit Navigation Item
               </h1>
             </div>
           </div>
@@ -31,7 +36,7 @@ export default function NewNavigationPage() {
 
       {/* Main Content */}
       <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
-        <NavigationForm />
+        <NavigationForm navigation={navigation} isEdit />
       </main>
 
       {/* Footer */}
