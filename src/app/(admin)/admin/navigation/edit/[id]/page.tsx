@@ -31,7 +31,7 @@ export default async function EditNavigationPage({
           </div>
         </header>
         <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
-          <p>The navigation item you're looking for doesn't exist.</p>
+          <p>The navigation item you&apos;re looking for doesn&apos;t exist.</p>
         </main>
       </div>
     );

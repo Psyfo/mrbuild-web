@@ -45,6 +45,7 @@ export default function NavigationForm({
         setFormData((prev) => ({ ...prev, isExternal }));
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData.href]);
 
   const handleSubmit = async (e: React.FormEvent) => {

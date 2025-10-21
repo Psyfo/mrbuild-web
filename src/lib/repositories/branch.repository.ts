@@ -15,7 +15,9 @@ export class BranchRepository {
   /**
    * Create a new branch
    */
-  async create(branchData: Omit<IBranch, '_id'>): Promise<IBranch> {
+  async create(
+    branchData: Omit<IBranch, '_id' | 'createdAt' | 'updatedAt'>
+  ): Promise<IBranch> {
     const db = await getDatabase();
     const collection = db.collection(COLLECTION_NAME);
 

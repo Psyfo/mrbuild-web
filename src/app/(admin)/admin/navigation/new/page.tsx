@@ -1,13 +1,9 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
 import NavigationForm from '../components/NavigationForm';
 import { AdminFooter } from '@/components/admin/AdminFooter';
 import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 
 export default function NewNavigationPage() {
-  const router = useRouter();
-
   return (
     <div className='flex flex-col bg-gray-50 min-h-screen'>
       {/* Header */}

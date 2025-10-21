@@ -59,7 +59,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
     const body = await request.json();
 
     // Build updates object with only provided fields
-    const updates: Record<string, any> = {};
+    const updates: Record<string, unknown> = {};
 
     // Only include fields that are explicitly provided in the request
     if (body.hasOwnProperty('title')) updates.title = body.title;

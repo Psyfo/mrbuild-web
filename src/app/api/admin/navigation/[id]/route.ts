@@ -51,7 +51,7 @@ export async function PATCH(
     const body = await request.json();
 
     // Build updates object with only provided fields
-    const updates: Record<string, any> = {};
+    const updates: Record<string, unknown> = {};
     if (body.hasOwnProperty('label')) updates.label = body.label;
     if (body.hasOwnProperty('href')) updates.href = body.href;
     if (body.hasOwnProperty('order')) updates.order = body.order;

@@ -3,7 +3,7 @@
  * GET - Get special statistics
  */
 
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import * as specialService from '@/lib/services/special.service';
@@ -12,7 +12,7 @@ import * as specialService from '@/lib/services/special.service';
  * GET /api/admin/specials/stats
  * Get special statistics
  */
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Check authentication
     const session = await getServerSession(authOptions);

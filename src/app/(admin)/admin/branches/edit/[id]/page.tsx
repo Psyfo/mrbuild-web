@@ -7,7 +7,6 @@ import { BranchForm } from '@/components/admin/BranchForm';
 import { AdminFooter } from '@/components/admin/AdminFooter';
 import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 
 export default function EditBranchPage() {
@@ -37,7 +36,8 @@ export default function EditBranchPage() {
     if (params.id) {
       fetchBranch();
     }
-  }, [params.id, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.id]);
 
   if (loading) {
     return (

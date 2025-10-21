@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import {
   IContact,
@@ -47,7 +46,6 @@ import {
 } from '@/components/ui/select';
 
 export default function ContactManagementPage() {
-  const router = useRouter();
   const [contacts, setContacts] = useState<IContact[]>([]);
   const [stats, setStats] = useState<IContactStats | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());

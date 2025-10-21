@@ -1,6 +1,4 @@
 'use client';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';
 import { AdminFooter } from '@/components/admin/AdminFooter';
 import { AdminBreadcrumb } from '@/components/admin/AdminBreadcrumb';
 import { INavigation } from '@/types/navigation';
@@ -11,8 +9,6 @@ export default function EditNavigationPageClient({
 }: {
   navigation: INavigation;
 }) {
-  const router = useRouter();
-
   return (
     <div className='flex flex-col bg-gray-50 min-h-screen'>
       {/* Header */}

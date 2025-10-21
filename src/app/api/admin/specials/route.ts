@@ -35,7 +35,14 @@ export async function GET(request: NextRequest) {
       | 'asc'
       | 'desc';
 
-    const params: any = {
+    const params: {
+      page: number;
+      pageSize: number;
+      sortBy: string;
+      sortOrder: 'asc' | 'desc';
+      status?: SpecialStatus;
+      isActive?: boolean;
+    } = {
       page,
       pageSize,
       sortBy,

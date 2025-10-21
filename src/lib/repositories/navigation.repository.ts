@@ -34,7 +34,7 @@ export async function findById(id: string): Promise<INavigation | null> {
 }
 
 export async function create(
-  navigation: Omit<INavigation, '_id'>
+  navigation: Omit<INavigation, '_id' | 'createdAt' | 'updatedAt'>
 ): Promise<INavigation> {
   const db = await getDatabase();
   const collection = db.collection<INavigation>(COLLECTION_NAME);
