@@ -37,7 +37,9 @@ export const ImageShimmer: React.FC<ImageShimmerProps> = ({
       <Image
         {...props}
         alt={alt}
-        className={`${className} ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}
+        className={`${className} ${
+          isLoading ? 'opacity-0' : 'opacity-100'
+        } transition-opacity duration-500`}
         onLoad={handleLoad}
       />
     </div>
