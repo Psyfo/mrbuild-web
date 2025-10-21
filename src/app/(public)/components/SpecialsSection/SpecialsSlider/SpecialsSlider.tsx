@@ -2,11 +2,11 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import Image from 'next/image';
 import React from 'react';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { ISpecial } from '@/types/special';
+import { ImageShimmer } from '@/components/ImageShimmer';
 
 interface SpecialsSliderProps {
   specials: ISpecial[];
@@ -47,7 +47,7 @@ const SpecialsSlider: React.FC<SpecialsSliderProps> = ({ specials }) => {
       {specials.map((special, index) => (
         <SwiperSlide key={special._id || index}>
           <div className='flex justify-center items-center'>
-            <Image
+            <ImageShimmer
               src={special.image.secureUrl}
               alt={special.title || 'Special'}
               width={special.image.width}
@@ -55,6 +55,7 @@ const SpecialsSlider: React.FC<SpecialsSliderProps> = ({ specials }) => {
               unoptimized
               quality={100}
               className='mx-auto w-[100%] h-auto'
+              shimmerClassName='rounded-lg'
             />
           </div>
         </SwiperSlide>
