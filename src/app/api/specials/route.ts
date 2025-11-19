@@ -6,7 +6,9 @@
 import { NextResponse } from 'next/server';
 import * as specialService from '@/lib/services/special.service';
 
-export const revalidate = 3600; // Revalidate every hour
+// Disable caching to ensure latest specials are always fetched
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 /**
  * GET /api/specials
