@@ -101,7 +101,7 @@ const ServicesSlider = () => {
     >
       {services.map((service, index) => (
         <SwiperSlide key={index} className=''>
-          <div className=' bg-mbRed rounded-3xl shadow-md overflow-hidden object-contain'>
+          <div className='bg-mbRed shadow-md rounded-3xl object-contain overflow-hidden'>
             <Image
               src={service.imageUrl}
               alt={service.heading}
@@ -109,12 +109,12 @@ const ServicesSlider = () => {
               height={120}
               quality={100}
               unoptimized
-              className='w-full h-auto mb-4'
+              className='mb-4 w-full h-auto'
             />
-            <h3 className='font-aleo font-bold text-[1.2rem] lg:text-[2.1rem] text-white mx-4 mb-2'>
+            <h3 className='mx-4 mb-2 font-aleo font-bold text-[1.2rem] text-white lg:text-[2.1rem]'>
               {service.heading}
             </h3>
-            <p className='h-[120px] overflow-y-auto font-dinot text-[14px] lg:text-[1rem] text-white mx-4 mb-8'>
+            <p className='mx-4 mb-8 h-[120px] overflow-y-auto font-dinot text-[14px] text-white lg:text-[1rem]'>
               {service.text}
             </p>
             <Image
@@ -122,7 +122,8 @@ const ServicesSlider = () => {
               alt={service.heading}
               height={69}
               width={69}
-              className='absolute top-[40px] right-[60px] w-[3rem] lg:w-[4.3rem] h-auto'
+              className='top-[40px] right-[60px] absolute w-[3rem] lg:w-[4.3rem] h-auto'
+              style={{ height: 'auto' }}
             />
           </div>
         </SwiperSlide>

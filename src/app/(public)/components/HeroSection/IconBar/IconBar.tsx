@@ -33,18 +33,18 @@ const IconBar = () => {
   };
 
   return (
-    <div className='flex flex-wrap gap-y-4 items-start justify-center bg-mbRed w-[95vw] md:w-[65vw] lg:w-[65%] h-auto px-[1rem] lg:px-[3.125rem] py-[1rem] absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 transform z-10 rounded-2xl xl:rounded-full lg:border-r lg:border-white'>
+    <div className='bottom-0 left-1/2 z-10 absolute flex flex-wrap justify-center items-start gap-y-4 bg-mbRed px-[1rem] lg:px-[3.125rem] py-[1rem] lg:border-white lg:border-r rounded-2xl xl:rounded-full w-[95vw] md:w-[65vw] lg:w-[65%] h-auto -translate-x-1/2 translate-y-1/2 transform'>
       {iconData.map(({ src, name }, idx) => (
         <div
           key={idx}
-          className='flex flex-col items-center justify-center w-1/4 xl:flex-1 h-auto lg:h-auto py-[1rem]'
+          className='flex flex-col xl:flex-1 justify-center items-center py-[1rem] w-1/4 h-auto lg:h-auto'
         >
           <motion.div
             variants={iconVariants}
             initial='hidden'
             animate='visible'
             custom={idx} // Pass the index to control the delay
-            className='flex items-center justify-center w-auto h-[3rem] lg:h-[4rem]'
+            className='flex justify-center items-center w-auto h-[3rem] lg:h-[4rem]'
           >
             <Image
               src={src}
@@ -52,6 +52,7 @@ const IconBar = () => {
               width={50}
               height={50}
               className='w-auto h-full'
+              priority={idx === 0 || idx === 7} // Add priority to first (electrical) and last (diy) icons
             />
           </motion.div>
           <motion.span
@@ -59,7 +60,7 @@ const IconBar = () => {
             initial='hidden'
             animate='visible'
             custom={idx} // Match the index for the same delay
-            className='text-white text-center text-[0.8rem] lg:text-[1rem] mt-[10px] tracking-[0.1rem]'
+            className='mt-[10px] text-[0.8rem] text-white lg:text-[1rem] text-center tracking-[0.1rem]'
           >
             {name}
           </motion.span>
