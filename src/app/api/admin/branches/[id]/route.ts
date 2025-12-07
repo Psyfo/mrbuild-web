@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic';
  */
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -26,7 +26,8 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const branch = await branchService.getBranchById(params.id);
+    const { id } = await params;
+    const branch = await branchService.getBranchById(id);
 
     if (!branch) {
       return NextResponse.json({ error: 'Branch not found' }, { status: 404 });
@@ -48,7 +49,7 @@ export async function GET(
  */
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -57,7 +58,8 @@ export async function PATCH(
     }
 
     const updates = await req.json();
-    const branch = await branchService.updateBranch(params.id, updates);
+    const { id } = await params;
+    const branch = await branchService.updateBranch(id, updates);
 
     if (!branch) {
       return NextResponse.json({ error: 'Branch not found' }, { status: 404 });
@@ -79,7 +81,7 @@ export async function PATCH(
  */
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -87,7 +89,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const success = await branchService.deleteBranch(params.id);
+    const { id } = await params;
+    const success = await branchService.deleteBranch(id);
 
     if (!success) {
       return NextResponse.json({ error: 'Branch not found' }, { status: 404 });

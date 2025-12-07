@@ -6,17 +6,18 @@ import EditNavigationPageClient from '../EditNavigationPageClient';
 export default async function EditNavigationPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
   const session = await getServerSession(authOptions);
   if (!session) {
     redirect('/login');
   }
 
+  const { id } = await params;
   const { getNavigationById } = await import(
     '@/lib/services/navigation.service'
   );
-  const navigation = await getNavigationById(params.id);
+  const navigation = await getNavigationById(id);
 
   if (!navigation) {
     return (

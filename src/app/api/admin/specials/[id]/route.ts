@@ -11,9 +11,9 @@ import { authOptions } from '@/lib/auth';
 import * as specialService from '@/lib/services/special.service';
 
 interface RouteParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 /**
@@ -28,7 +28,8 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const special = await specialService.getSpecialById(params.id);
+    const { id } = await params;
+    const special = await specialService.getSpecialById(id);
 
     if (!special) {
       return NextResponse.json({ error: 'Special not found' }, { status: 404 });
@@ -78,6 +79,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
       updates.validUntil = body.validUntil ? new Date(body.validUntil) : null;
     }
 
+    const { id } = await params;
     let special;
 
     // If new image provided, update with image upload
@@ -87,13 +89,13 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
       body.image.startsWith('data:image')
     ) {
       special = await specialService.updateSpecialWithUpload(
-        params.id,
+        id,
         body.image,
         updates
       );
     } else {
       // Update without changing image
-      special = await specialService.updateSpecial(params.id, updates);
+      special = await specialService.updateSpecial(id, updates);
     }
 
     if (!special) {
@@ -128,7 +130,8 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const success = await specialService.deleteSpecial(params.id);
+    const { id } = await params;
+    const success = await specialService.deleteSpecial(id);
 
     if (!success) {
       return NextResponse.json({ error: 'Special not found' }, { status: 404 });

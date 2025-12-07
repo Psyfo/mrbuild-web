@@ -11,7 +11,7 @@ import {
 // GET single navigation item
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -19,7 +19,8 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const navigation = await getNavigationById(params.id);
+    const { id } = await params;
+    const navigation = await getNavigationById(id);
     if (!navigation) {
       return NextResponse.json(
         { error: 'Navigation not found' },
@@ -40,7 +41,7 @@ export async function GET(
 // PATCH update navigation item
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -60,7 +61,8 @@ export async function PATCH(
       updates.openInNewTab = body.openInNewTab;
     if (body.hasOwnProperty('isExternal')) updates.isExternal = body.isExternal;
 
-    const success = await updateNavigation(params.id, updates);
+    const { id } = await params;
+    const success = await updateNavigation(id, updates);
 
     if (!success) {
       return NextResponse.json(
@@ -82,7 +84,7 @@ export async function PATCH(
 // DELETE navigation item
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -90,7 +92,8 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const success = await deleteNavigation(params.id);
+    const { id } = await params;
+    const success = await deleteNavigation(id);
 
     if (!success) {
       return NextResponse.json(
