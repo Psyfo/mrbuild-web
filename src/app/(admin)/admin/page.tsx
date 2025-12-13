@@ -66,7 +66,7 @@ export default function AdminDashboard() {
         });
 
         // Build recent activity
-        const activities = [];
+        const activities: any[] = [];
 
         if (contactsRes.length > 0) {
           const recentContacts = contactsRes.slice(0, 2);
