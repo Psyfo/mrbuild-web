@@ -5,10 +5,6 @@ import Image from 'next/image';
 import { Navigation, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-// import { useEffect, useRef } from 'react';
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 const ServicesSlider = () => {
   const services = [
     {

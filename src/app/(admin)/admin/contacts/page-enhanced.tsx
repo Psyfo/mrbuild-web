@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import {
   IContact,
@@ -43,12 +42,10 @@ import {
   DataTableHeaderSelection,
 } from '@/components/admin/DataTable';
 import { DataTableMultiSelect } from '@/components/admin/DataTable/DataTableMultiSelect';
-import { exportToCSV, exportToJSON } from '@/lib/export-utils';
-import { Mail, MoreHorizontal, ExternalLink } from 'lucide-react';
-import Link from 'next/link';
+import { exportToCSV } from '@/lib/export-utils';
+import { Mail, MoreHorizontal } from 'lucide-react';
 
 export default function EnhancedContactManagementPage() {
-  const router = useRouter();
   const [contacts, setContacts] = useState<IContact[]>([]);
   const [stats, setStats] = useState<IContactStats | null>(null);
   const [loading, setLoading] = useState(true);
@@ -91,24 +88,27 @@ export default function EnhancedContactManagementPage() {
   }, [fetchContacts]);
 
   // Update single contact
-  const updateContact = async (id: string, updates: Partial<IContact>) => {
-    try {
-      const response = await fetch(`/api/admin/contacts/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updates),
-      });
+  const updateContact = useCallback(
+    async (id: string, updates: Partial<IContact>) => {
+      try {
+        const response = await fetch(`/api/admin/contacts/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updates),
+        });
 
-      if (!response.ok) throw new Error('Failed to update contact');
+        if (!response.ok) throw new Error('Failed to update contact');
 
-      toast.success('Contact updated successfully');
-      fetchContacts();
-      fetchStats();
-    } catch (error) {
-      console.error('Error updating contact:', error);
-      toast.error('Failed to update contact');
-    }
-  };
+        toast.success('Contact updated successfully');
+        fetchContacts();
+        fetchStats();
+      } catch (error) {
+        console.error('Error updating contact:', error);
+        toast.error('Failed to update contact');
+      }
+    },
+    [fetchContacts]
+  );
 
   // Bulk operations
   const bulkUpdateStatus = async (ids: string[], status: ContactStatus) => {
@@ -131,29 +131,34 @@ export default function EnhancedContactManagementPage() {
     }
   };
 
-  const bulkDelete = async (ids: string[]) => {
-    if (!confirm(`Are you sure you want to delete ${ids.length} contact(s)?`)) {
-      return;
-    }
+  const bulkDelete = useCallback(
+    async (ids: string[]) => {
+      if (
+        !confirm(`Are you sure you want to delete ${ids.length} contact(s)?`)
+      ) {
+        return;
+      }
 
-    try {
-      const response = await fetch('/api/admin/contacts', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ids }),
-      });
+      try {
+        const response = await fetch('/api/admin/contacts', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ids }),
+        });
 
-      if (!response.ok) throw new Error('Failed to delete contacts');
+        if (!response.ok) throw new Error('Failed to delete contacts');
 
-      const data = await response.json();
-      toast.success(`Deleted ${data.deletedCount} contact(s)`);
-      fetchContacts();
-      fetchStats();
-    } catch (error) {
-      console.error('Error deleting contacts:', error);
-      toast.error('Failed to delete contacts');
-    }
-  };
+        const data = await response.json();
+        toast.success(`Deleted ${data.deletedCount} contact(s)`);
+        fetchContacts();
+        fetchStats();
+      } catch (error) {
+        console.error('Error deleting contacts:', error);
+        toast.error('Failed to delete contacts');
+      }
+    },
+    [fetchContacts]
+  );
 
   // Get status badge variant
   const getStatusVariant = (
@@ -352,7 +357,7 @@ export default function EnhancedContactManagementPage() {
         enableHiding: false,
       },
     ],
-    []
+    [bulkDelete, updateContact]
   );
 
   // Filter data

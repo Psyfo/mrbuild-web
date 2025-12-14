@@ -5,9 +5,6 @@ import L from 'leaflet';
 import React, { useEffect, useRef } from 'react';
 
 /* eslint-disable react-hooks/exhaustive-deps */
-
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 const LeafletMap = ({ branches, selectedBranch }: any) => {

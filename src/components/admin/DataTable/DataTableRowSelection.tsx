@@ -18,6 +18,8 @@ export function DataTableRowSelection<TData>({
   );
 }
 
+// TData is required for type safety even if not directly used in the props
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface DataTableHeaderSelectionProps<TData> {
   table: {
     getIsAllPageRowsSelected: () => boolean;

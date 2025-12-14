@@ -25,16 +25,43 @@ import {
   CheckCircle2,
   Clock,
   TrendingUp,
-  TrendingDown,
   ArrowUpRight,
   Mail,
   MapPin,
   Menu,
   Tag,
-  Package,
-  Eye,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import type { LucideIcon } from 'lucide-react';
+
+// Type definitions for admin dashboard
+interface ContactResponse {
+  _id: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  message: string;
+  createdAt: string;
+  status?: string;
+}
+
+interface SpecialResponse {
+  _id: string;
+  title: string;
+  description?: string;
+  createdAt: string;
+  updatedAt?: string;
+  status?: string;
+}
+
+interface ActivityItem {
+  type: 'contact' | 'special';
+  title: string;
+  description: string;
+  time: string;
+  icon: LucideIcon;
+}
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -44,7 +71,7 @@ export default function AdminDashboard() {
     specials: 0,
     navigation: 0,
   });
-  const [recentActivity, setRecentActivity] = useState<any[]>([]);
+  const [recentActivity, setRecentActivity] = useState<ActivityItem[]>([]);
 
   useEffect(() => {
     // Fetch real stats
@@ -66,15 +93,19 @@ export default function AdminDashboard() {
         });
 
         // Build recent activity
-        const activities: any[] = [];
+        const activities: ActivityItem[] = [];
 
         if (contactsRes.length > 0) {
           const recentContacts = contactsRes.slice(0, 2);
-          recentContacts.forEach((contact: any) => {
+          recentContacts.forEach((contact: ContactResponse) => {
+            const contactName =
+              contact.name ||
+              `${contact.firstName || ''} ${contact.lastName || ''}`.trim() ||
+              contact.email;
             activities.push({
               type: 'contact',
               title: 'New contact message',
-              description: `From ${contact.name}`,
+              description: `From ${contactName}`,
               time: new Date(contact.createdAt).toLocaleDateString(),
               icon: Mail,
             });
@@ -83,7 +114,7 @@ export default function AdminDashboard() {
 
         if (specialsRes.length > 0) {
           const recentSpecials = specialsRes.slice(0, 2);
-          recentSpecials.forEach((special: any) => {
+          recentSpecials.forEach((special: SpecialResponse) => {
             activities.push({
               type: 'special',
               title: 'Special updated',

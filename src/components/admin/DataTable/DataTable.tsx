@@ -47,7 +47,6 @@ import {
   MoreHorizontal,
   Loader2,
 } from 'lucide-react';
-import { Checkbox } from '@/components/ui/checkbox';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -97,6 +96,7 @@ export function DataTable<TData, TValue>({
   const [rowSelection, setRowSelection] = React.useState({});
   const [globalFilter, setGlobalFilter] = React.useState('');
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,

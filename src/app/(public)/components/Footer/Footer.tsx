@@ -1,14 +1,15 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
     <footer
       id='footer'
-      className='flex flex-col items-center px-[2rem] py-[2rem] bg-mbRed rounded-t-3xl'
+      className='flex flex-col items-center bg-mbRed px-[2rem] py-[2rem] rounded-t-3xl'
     >
       {/* Footer Blocks */}
-      <div className='flex flex-col lg:flex-row w-full font-dinot text-[1.01rem] text-white text-center'>
-        <div className='flex items-center justify-center lg:flex-1'>
+      <div className='flex lg:flex-row flex-col w-full font-dinot text-[1.01rem] text-white text-center'>
+        <div className='flex lg:flex-1 justify-center items-center'>
           <Image
             src='/images/footer/logo_mb_white.svg'
             alt='Mr Build Full Logo'
@@ -17,31 +18,31 @@ export default function Footer() {
             className='w-[252px] h-auto'
           />
         </div>
-        <div className='py-[2rem] lg:px-[2rem] border-b lg:border-b-0 lg:border-r-[1px] border-white lg:flex-1'>
+        <div className='lg:flex-1 lg:px-[2rem] py-[2rem] border-white lg:border-r-[1px] border-b lg:border-b-0'>
           <p className=''>Corner Danie Joubert,</p>
           <p className=''>Claude Wheatley St,</p>
           <p className='mb-[1rem]'>Tzaneen, 0850</p>
           <p className=''>Tel: 015 004 0560</p>
           <p className=''>Email: tzaneen@mrbuild.co.za</p>
         </div>
-        <div className='py-[2rem] lg:px-[2rem]  border-b lg:border-b-0 lg:border-r-[1px] border-white lg:flex-1'>
+        <div className='lg:flex-1 lg:px-[2rem] py-[2rem] border-white lg:border-r-[1px] border-b lg:border-b-0'>
           <p>
-            <a href='/#about'>About</a>
+            <Link href='/#about'>About</Link>
           </p>
           <p>
-            <a href='/#services'>Our Services</a>
+            <Link href='/#services'>Our Services</Link>
           </p>
           <p>
-            <a href='/#branch-locator'>Branch Locator</a>
+            <Link href='/#branch-locator'>Branch Locator</Link>
           </p>
           <p>
-            <a href='/#brands'>Brands</a>
+            <Link href='/#brands'>Brands</Link>
           </p>
           <p>
-            <a href='/#contact'>Contact Us</a>
+            <Link href='/#contact'>Contact Us</Link>
           </p>
         </div>
-        <div className='py-[2rem] lg:px-[2rem] lg:flex-1'>
+        <div className='lg:flex-1 lg:px-[2rem] py-[2rem]'>
           <p>Follow Us</p>
           <p>
             <a
@@ -69,7 +70,7 @@ export default function Footer() {
       </div>
 
       {/* Copyright Notice */}
-      <div className='flex items-center justify-center mt-[2rem] font-dinot text-[11px] text-center text-white'>
+      <div className='flex justify-center items-center mt-[2rem] font-dinot text-[11px] text-white text-center'>
         <span>
           Copyright © 2024  AfriBridge Outsourcing Solutions - All Rights
           Reserved
