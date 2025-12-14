@@ -279,7 +279,7 @@ export default function BranchManagementPage() {
     <div className='flex flex-col bg-gray-50 min-h-screen'>
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
-        <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
+        <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-2xl'>
           <div className='flex justify-between items-center h-16'>
             <h1 className='font-bold text-gray-900 text-2xl'>
               Branch Management
@@ -292,7 +292,7 @@ export default function BranchManagementPage() {
       </header>
 
       {/* Main Content */}
-      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
+      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-12 py-8 max-w-screen-2xl'>
         <AdminBreadcrumb />
 
         {/* Stats Cards */}
@@ -411,7 +411,7 @@ export default function BranchManagementPage() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className='w-12'>
+                        <TableHead className='w-12 lg:w-16'>
                           <Checkbox
                             checked={
                               selectedIds.size === branches.length &&
@@ -421,32 +421,38 @@ export default function BranchManagementPage() {
                           />
                         </TableHead>
                         <TableHead
-                          className='cursor-pointer'
+                          className='min-w-[150px] lg:min-w-[250px] cursor-pointer'
                           onClick={() => handleSort('branchName')}
                         >
                           Branch Name {getSortIcon('branchName')}
                         </TableHead>
                         <TableHead
-                          className='cursor-pointer'
+                          className='w-[120px] lg:w-[150px] cursor-pointer'
                           onClick={() => handleSort('branchType')}
                         >
                           Type {getSortIcon('branchType')}
                         </TableHead>
                         <TableHead
-                          className='cursor-pointer'
+                          className='w-[120px] lg:w-[180px] cursor-pointer'
                           onClick={() => handleSort('city')}
                         >
                           City {getSortIcon('city')}
                         </TableHead>
-                        <TableHead>Contact</TableHead>
+                        <TableHead className='w-[140px] lg:w-[200px]'>
+                          Contact
+                        </TableHead>
                         <TableHead
-                          className='cursor-pointer'
+                          className='w-[100px] lg:w-[140px] cursor-pointer'
                           onClick={() => handleSort('status')}
                         >
                           Status {getSortIcon('status')}
                         </TableHead>
-                        <TableHead>Active</TableHead>
-                        <TableHead className='text-right'>Actions</TableHead>
+                        <TableHead className='w-[90px] lg:w-[120px]'>
+                          Active
+                        </TableHead>
+                        <TableHead className='w-[80px] lg:w-[100px] text-right'>
+                          Actions
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>

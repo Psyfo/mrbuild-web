@@ -325,7 +325,7 @@ export default function ContactManagementPage() {
     <div className='flex flex-col bg-gray-50 min-h-screen'>
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
-        <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
+        <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-2xl'>
           <div className='flex justify-between items-center h-16'>
             <h1 className='font-bold text-gray-900 text-2xl'>
               Contact Management
@@ -335,7 +335,7 @@ export default function ContactManagementPage() {
       </header>
 
       {/* Main Content */}
-      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
+      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-12 py-8 max-w-screen-2xl'>
         <AdminBreadcrumb />
 
         {/* Stats Cards */}
@@ -501,7 +501,7 @@ export default function ContactManagementPage() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className='w-12'>
+                        <TableHead className='w-12 lg:w-16'>
                           <Checkbox
                             checked={
                               selectedIds.size === contacts.length &&
@@ -511,37 +511,41 @@ export default function ContactManagementPage() {
                           />
                         </TableHead>
                         <TableHead
-                          className='hover:bg-gray-50 cursor-pointer'
+                          className='hover:bg-gray-50 w-[120px] lg:w-[180px] cursor-pointer'
                           onClick={() => handleSort('firstName')}
                         >
                           Name {getSortIcon('firstName')}
                         </TableHead>
                         <TableHead
-                          className='hover:bg-gray-50 cursor-pointer'
+                          className='hover:bg-gray-50 w-[150px] lg:w-[220px] cursor-pointer'
                           onClick={() => handleSort('email')}
                         >
                           Email {getSortIcon('email')}
                         </TableHead>
-                        <TableHead>Message</TableHead>
+                        <TableHead className='min-w-[200px] lg:min-w-[300px]'>
+                          Message
+                        </TableHead>
                         <TableHead
-                          className='hover:bg-gray-50 cursor-pointer'
+                          className='hover:bg-gray-50 w-[100px] lg:w-[130px] cursor-pointer'
                           onClick={() => handleSort('status')}
                         >
                           Status {getSortIcon('status')}
                         </TableHead>
                         <TableHead
-                          className='hover:bg-gray-50 cursor-pointer'
+                          className='hover:bg-gray-50 w-[90px] lg:w-[120px] cursor-pointer'
                           onClick={() => handleSort('priority')}
                         >
                           Priority {getSortIcon('priority')}
                         </TableHead>
                         <TableHead
-                          className='hover:bg-gray-50 cursor-pointer'
+                          className='hover:bg-gray-50 w-[120px] lg:w-[160px] cursor-pointer'
                           onClick={() => handleSort('createdAt')}
                         >
                           Date {getSortIcon('createdAt')}
                         </TableHead>
-                        <TableHead className='text-right'>Actions</TableHead>
+                        <TableHead className='w-[80px] lg:w-[100px] text-right'>
+                          Actions
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -574,7 +578,7 @@ export default function ContactManagementPage() {
                               {contact.email}
                             </a>
                           </TableCell>
-                          <TableCell className='max-w-md truncate'>
+                          <TableCell className='max-w-[200px] lg:max-w-[400px] truncate'>
                             {contact.message}
                           </TableCell>
                           <TableCell>

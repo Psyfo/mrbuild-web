@@ -127,9 +127,9 @@ export function DataTable<TData, TValue>({
   const selectedRows = table.getFilteredSelectedRowModel().rows;
 
   return (
-    <div className='space-y-4'>
+    <div className='space-y-6'>
       {/* Toolbar */}
-      <div className='flex md:flex-row flex-col md:justify-between md:items-center gap-4'>
+      <div className='flex md:flex-row flex-col md:justify-between md:items-center gap-4 lg:gap-6'>
         <div className='flex md:flex-row flex-col flex-1 md:items-center gap-4'>
           {showSearch && searchKey && (
             <Input
@@ -140,7 +140,7 @@ export function DataTable<TData, TValue>({
               onChange={(event) =>
                 table.getColumn(searchKey)?.setFilterValue(event.target.value)
               }
-              className='w-full md:w-[300px] h-9'
+              className='w-full md:w-[350px] lg:w-[450px] h-10'
             />
           )}
           {filterComponent && (
@@ -153,7 +153,7 @@ export function DataTable<TData, TValue>({
           {showRowSelection && selectedRows.length > 0 && bulkActions && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant='outline' size='sm'>
+                <Button variant='outline' className='px-4 h-10'>
                   Actions ({selectedRows.length})
                   <ChevronDown className='ml-2 w-4 h-4' />
                 </Button>
@@ -319,7 +319,7 @@ export function DataTable<TData, TValue>({
 
       {/* Pagination */}
       {showPagination && (
-        <div className='flex sm:flex-row flex-col sm:justify-between sm:items-center gap-4'>
+        <div className='flex sm:flex-row flex-col sm:justify-between sm:items-center gap-4 lg:gap-6'>
           <div className='flex items-center gap-4'>
             {showRowSelection && (
               <div className='text-muted-foreground text-sm'>

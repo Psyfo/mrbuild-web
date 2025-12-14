@@ -171,7 +171,7 @@ export default function NavigationManagementPage() {
     <div className='flex flex-col bg-gray-50 min-h-screen'>
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
-        <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
+        <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-2xl'>
           <div className='flex justify-between items-center h-16'>
             <h1 className='font-bold text-gray-900 text-2xl'>
               Navigation Management
@@ -184,7 +184,7 @@ export default function NavigationManagementPage() {
       </header>
 
       {/* Main Content */}
-      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
+      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-12 py-8 max-w-screen-2xl'>
         <AdminBreadcrumb />
         {/* Stats Cards */}
         <div className='gap-4 grid grid-cols-1 md:grid-cols-5 mb-8'>
@@ -274,12 +274,24 @@ export default function NavigationManagementPage() {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>Order</TableHead>
-                    <TableHead>Label</TableHead>
-                    <TableHead>Link</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Actions</TableHead>
+                    <TableHead className='w-[100px] lg:w-[140px]'>
+                      Order
+                    </TableHead>
+                    <TableHead className='min-w-[150px] lg:min-w-[250px]'>
+                      Label
+                    </TableHead>
+                    <TableHead className='min-w-[200px] lg:min-w-[350px]'>
+                      Link
+                    </TableHead>
+                    <TableHead className='w-[100px] lg:w-[130px]'>
+                      Status
+                    </TableHead>
+                    <TableHead className='w-[100px] lg:w-[130px]'>
+                      Type
+                    </TableHead>
+                    <TableHead className='w-[140px] lg:w-[180px]'>
+                      Actions
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

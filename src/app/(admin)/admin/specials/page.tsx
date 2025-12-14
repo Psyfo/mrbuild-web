@@ -334,7 +334,7 @@ export default function SpecialsManagementPage() {
     <div className='flex flex-col bg-gray-50 min-h-screen'>
       {/* Header */}
       <header className='bg-white border-gray-200 border-b'>
-        <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl'>
+        <div className='mx-auto px-4 sm:px-6 lg:px-8 max-w-screen-2xl'>
           <div className='flex justify-between items-center h-16'>
             <h1 className='font-bold text-gray-900 text-2xl'>
               Specials Management
@@ -347,7 +347,7 @@ export default function SpecialsManagementPage() {
       </header>
 
       {/* Main Content */}
-      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-7xl'>
+      <main className='flex-1 mx-auto px-4 sm:px-6 lg:px-12 py-8 max-w-screen-2xl'>
         <AdminBreadcrumb />
 
         {/* Stats Cards */}
@@ -490,7 +490,7 @@ export default function SpecialsManagementPage() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className='w-[50px]'>
+                      <TableHead className='w-12 lg:w-16'>
                         <Checkbox
                           checked={
                             selectedIds.size === specials.length &&
@@ -499,32 +499,36 @@ export default function SpecialsManagementPage() {
                           onCheckedChange={toggleSelectAll}
                         />
                       </TableHead>
-                      <TableHead className='w-[100px]'>Image</TableHead>
+                      <TableHead className='w-[100px] lg:w-[140px]'>
+                        Image
+                      </TableHead>
                       <TableHead
-                        className='cursor-pointer'
+                        className='min-w-[200px] lg:min-w-[400px] cursor-pointer'
                         onClick={() => handleSort('title')}
                       >
                         Title {getSortIcon('title')}
                       </TableHead>
                       <TableHead
-                        className='cursor-pointer'
+                        className='w-[100px] lg:w-[140px] cursor-pointer'
                         onClick={() => handleSort('status')}
                       >
                         Status {getSortIcon('status')}
                       </TableHead>
                       <TableHead
-                        className='cursor-pointer'
+                        className='w-[80px] lg:w-[100px] cursor-pointer'
                         onClick={() => handleSort('displayOrder')}
                       >
                         Order {getSortIcon('displayOrder')}
                       </TableHead>
                       <TableHead
-                        className='cursor-pointer'
+                        className='w-[120px] lg:w-[160px] cursor-pointer'
                         onClick={() => handleSort('createdAt')}
                       >
                         Created {getSortIcon('createdAt')}
                       </TableHead>
-                      <TableHead className='text-right'>Actions</TableHead>
+                      <TableHead className='w-[80px] lg:w-[100px] text-right'>
+                        Actions
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
